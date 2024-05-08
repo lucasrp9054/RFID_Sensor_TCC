@@ -1,14 +1,18 @@
 <?php
-
-include "functions.php";
-
-// Verifica se o UID do cartão foi recebido
+// Verificar se foi recebido um UID do cartão RFID na solicitação GET
 if (isset($_GET['uid'])) {
-    $uid_rfid = $_GET['uid'];
-    // Chama a função para verificar e lidar com o registro
-    checkAndHandleRegistration($uid_rfid, $pdo);
-} else {
-    echo "Nenhum UID recebido.";
-}
+    $uid = $_GET['uid'];
 
+    // Conectar-se ao banco de dados
+    include "acesso_bd.php";
+
+    // Incluir o arquivo functions.php para ter acesso à função checkAndHandleRegistration()
+    include "functions.php";
+
+    // Chamar a função checkAndHandleRegistration() com o UID do cartão RFID
+    checkAndHandleRegistration($uid, $pdo);
+} else {
+    // Se nenhum UID do cartão RFID foi recebido na solicitação GET
+    echo "Nenhum UID do cartão RFID recebido.";
+}
 ?>
