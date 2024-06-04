@@ -1,18 +1,28 @@
 <?php
-// Verificar se foi recebido um UID do cartão RFID na solicitação GET
-if (isset($_GET['uid'])) {
-    $uid = $_GET['uid'];
 
-    // Conectar-se ao banco de dados
-    include "acesso_bd.php";
+require "vendor/autoload.php";
+include "functions.php";
+include "acesso_bd.php";
 
-    // Incluir o arquivo functions.php para ter acesso à função checkAndHandleRegistration()
-    include "functions.php";
+use Lepiaf\Serial\Serial;
 
-    // Chamar a função checkAndHandleRegistration() com o UID do cartão RFID
+$serial = new Serial();
+$serial->deviceSet("COM3"); // Altere para a porta serial correta
+$serial->confBaudRate(9600); // Taxa de transmissão
+$serial->confParity("none"); // Paridade
+$serial->confCharacterLength(8); // Comprimento do caractere
+$serial->confStopBits(1); // Bits de parada
+
+$serial->deviceOpen();
+
+while (true) {
+    // Lê o UID recebido pela porta serial
+    $uid = trim($serial->readPort());
+
+    // Chama a função verificarUid com o UID e a conexão PDO
     checkAndHandleRegistration($uid, $pdo);
-} else {
-    // Se nenhum UID do cartão RFID foi recebido na solicitação GET
-    echo "Nenhum UID do cartão RFID recebido.";
 }
+
+$serial->deviceClose();
+
 ?>
