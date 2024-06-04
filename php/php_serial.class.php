@@ -40,49 +40,52 @@ class phpSerial
      * @return phpSerial
      */
     function phpSerial ()
+{
+    setlocale(LC_ALL, "en_US");
+
+    $sysname = php_uname();
+
+    if (substr($sysname, 0, 5) === "Linux")
     {
-        setlocale(LC_ALL, "en_US");
+        $this->_os = "linux";
 
-        $sysname = php_uname();
-
-        if (substr($sysname, 0, 5) === "Linux")
+        if($this->_exec("stty --version") === 0)
         {
-            $this->_os = "linux";
-
-            if($this->_exec("stty --version") === 0)
-            {
-                register_shutdown_function(array($this, "deviceClose"));
-            }
-            else
-            {
-                trigger_error("No stty availible, unable to run.", E_USER_ERROR);
-            }
-        }
-        elseif (substr($sysname, 0, 6) === "Darwin")
-        {
-            $this->_os = "osx";
-
-            if($this->_exec("stty") === 0)
-            {
-                register_shutdown_function(array($this, "deviceClose"));
-            }
-            else
-            {
-                trigger_error("No stty availible, unable to run.", E_USER_ERROR);
-            }
-
-        }
-        elseif(substr($sysname, 0, 7) === "Windows")
-        {
-            $this->_os = "windows";
             register_shutdown_function(array($this, "deviceClose"));
         }
         else
         {
-            trigger_error("Host OS is neither osx, linux nor windows, unable to run.", E_USER_ERROR);
-            exit();
+            trigger_error("No stty availible, unable to run.", E_USER_ERROR);
         }
     }
+    elseif (substr($sysname, 0, 6) === "Darwin")
+    {
+        $this->_os = "osx";
+
+        if($this->_exec("stty") === 0)
+        {
+            register_shutdown_function(array($this, "deviceClose"));
+        }
+        else
+        {
+            trigger_error("No stty availible, unable to run.", E_USER_ERROR);
+        }
+
+    }
+    elseif(substr($sysname, 0, 7) === "Windows")
+    {
+        $this->_os = "windows";
+        register_shutdown_function(array($this, "deviceClose"));
+    }
+    else
+    {
+        trigger_error("Host OS is neither osx, linux nor windows, unable to run.", E_USER_ERROR);
+        exit();
+    }
+
+    return $this; // Adiciona esta linha para corrigir o erro
+}
+
 
     //
     // OPEN/CLOSE DEVICE SECTION -- {START}
@@ -232,51 +235,54 @@ class phpSerial
      * @return bool
      */
     function confBaudRate ($rate)
+{
+    if ($this->_dState !== SERIAL_DEVICE_SET)
     {
-        if ($this->_dState !== SERIAL_DEVICE_SET)
+        trigger_error("Unable to set the baud rate : the device is either not set or opened", E_USER_WARNING);
+        return false;
+    }
+
+    $validBauds = array (
+        110    => 11,
+        150    => 15,
+        300    => 30,
+        600    => 60,
+        1200   => 12,
+        2400   => 24,
+        4800   => 48,
+        9600   => 96,
+        19200  => 19,
+        38400  => 38400,
+        57600  => 57600,
+        115200 => 115200
+    );
+
+    if (isset($validBauds[$rate]))
+    {
+        if ($this->_os === "linux")
         {
-            trigger_error("Unable to set the baud rate : the device is either not set or opened", E_USER_WARNING);
+            $ret = $this->_exec("stty -F " . $this->_device . " " . (int) $rate, $out);
+        }
+        if ($this->_os === "osx")
+        {
+            $ret = $this->_exec("stty -f " . $this->_device . " " . (int) $rate, $out);
+        }
+        elseif ($this->_os === "windows")
+        {
+            $ret = $this->_exec("mode " . $this->_windevice . " BAUD=" . $validBauds[$rate], $out);
+        }
+
+        if ($ret !== 0)
+        {
+            trigger_error ("Unable to set baud rate: " . $out[1], E_USER_WARNING);
             return false;
         }
-
-        $validBauds = array (
-            110    => 11,
-            150    => 15,
-            300    => 30,
-            600    => 60,
-            1200   => 12,
-            2400   => 24,
-            4800   => 48,
-            9600   => 96,
-            19200  => 19,
-            38400  => 38400,
-            57600  => 57600,
-            115200 => 115200
-        );
-
-        if (isset($validBauds[$rate]))
-        {
-            if ($this->_os === "linux")
-            {
-                $ret = $this->_exec("stty -F " . $this->_device . " " . (int) $rate, $out);
-            }
-            if ($this->_os === "osx")
-            {
-                $ret = $this->_exec("stty -f " . $this->_device . " " . (int) $rate, $out);
-            }
-            elseif ($this->_os === "windows")
-            {
-                $ret = $this->_exec("mode " . $this->_windevice . " BAUD=" . $validBauds[$rate], $out);
-            }
-            else return false;
-
-            if ($ret !== 0)
-            {
-                trigger_error ("Unable to set baud rate: " . $out[1], E_USER_WARNING);
-                return false;
-            }
-        }
     }
+
+    // Adiciona um retorno padrão fora do bloco if
+    return true;
+}
+
 
     /**
      * Configure parity.
@@ -600,15 +606,16 @@ class phpSerial
     }
 
     function _ckClosed()
+{
+    if ($this->_dState !== SERIAL_DEVICE_OPENED)
     {
-        if ($this->_dState !== SERIAL_DEVICE_CLOSED)
-        {
-            trigger_error("Device must be closed", E_USER_WARNING);
-            return false;
-        }
-
-        return true;
+        trigger_error("Device must be closed", E_USER_WARNING);
+        return false;
     }
+
+    return true;
+}
+
 
     function _exec($cmd, &$out = null)
     {
