@@ -642,4 +642,3 @@ class phpSerial
     // INTERNAL TOOLKIT -- {STOP}
     //
 }
-?>
