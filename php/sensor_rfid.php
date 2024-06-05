@@ -38,4 +38,4 @@ try {
         $serial->deviceClose();
     }
 }
-?>
+

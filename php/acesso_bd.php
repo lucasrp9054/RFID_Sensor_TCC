@@ -8,4 +8,4 @@ try {
     die("Erro ao conectar ao banco de dados: " . $e->getMessage());
 }
 
-?>
+

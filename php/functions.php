@@ -69,4 +69,3 @@ function handleAlunoRegistration($id_rfid, $pdo) {
     }
 }
 
-?>
