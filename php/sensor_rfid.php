@@ -1,13 +1,14 @@
 <?php
 // Inclui a biblioteca php-serial
 require_once 'php_serial.class.php';
+include "functions.php";
 
 try {
     // Inicializa o objeto phpSerial
     $serial = new phpSerial();
 
     // Configura a porta serial (COM3 no Windows)
-    $serial->deviceSet('COM3');
+    $serial->deviceSet('COM5');
 
     // Configurações da porta serial
     $serial->confBaudRate(9600); // Velocidade de comunicação
@@ -19,13 +20,17 @@ try {
     // Abre a porta serial
     $serial->deviceOpen();
 
+    checkAndHandleRegistration("33 35 31 66 64 38 33 66 0a" , $pdo);
+
     echo "Listening to the serial port...\n";
 
     // Lê os dados da porta serial
     while (true) {
         $read = $serial->readPort();
         if ($read) {
-            echo "UID: " . trim($read) . "\n";
+            echo "Dados recebidos: " . $read;
+
+            
         }
         usleep(100000); // Aguarda 100ms antes de ler novamente
     }
