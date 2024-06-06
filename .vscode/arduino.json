@@ -1,6 +1,0 @@
-{
-    "sketch": "sensor_rfid_arduino.ino",
-    "board": "arduino:avr:uno",
-    "port": "COM3",
-    "programmer": "avrisp"
-}
