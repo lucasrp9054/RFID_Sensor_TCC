@@ -1,5 +1,6 @@
 <?php
 // Inclui a biblioteca php-serial
+
 require_once 'php_serial.class.php';
 include "functions.php";
 
@@ -20,15 +21,15 @@ try {
     // Abre a porta serial
     $serial->deviceOpen();
 
-    checkAndHandleRegistration("33 35 31 66 64 38 33 66 0a" , $pdo);
+    checkAndHandleRegistration(, $pdo);
 
     echo "Listening to the serial port...\n";
 
     // Lê os dados da porta serial
     while (true) {
-        $read = $serial->readPort();
-        if ($read) {
-            echo "Dados recebidos: " . $read;
+        $uid = $serial->readPort();
+        if ($uid) {
+            echo "Dados recebidos: " . $uid;
 
             
         }
