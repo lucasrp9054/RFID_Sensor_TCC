@@ -8,32 +8,20 @@ def send_uid_to_php(uid):
     response = requests.post(url, data=data)
     return response.text
 
-try:
-    # Configura a porta serial
-    serialInst = serial.Serial()
-    serialInst.baudrate = 9600
-    serialInst.port = "COM5"  # Ajustar para a porta correta
-    serialInst.open()
+# Configura a porta serial
+serialInst = serial.Serial()
+serialInst.baudrate = 9600
+serialInst.port = "COM5"  # Ajustar para a porta correta
+serialInst.open()
 
-    print("Listening to the serial port...")
+print("Listening to the serial port...")
 
-    # Lê os dados da porta serial
-    while True:
-        if serialInst.in_waiting:
-            uid = serialInst.readline().decode('utf-8').rstrip('\n')
-            if uid:
-                print(f"Dados recebidos: {uid}")
-                # Envia o UID para o script PHP
-                response = send_uid_to_php(uid)
-                print(f"Resposta do PHP: {response}")
+# Lê os dados da porta serial e envia para o script PHP
+while True:
+    if serialInst.in_waiting:
+        uid = serialInst.readline().decode('utf-8').rstrip('\n')
+        if uid:
+            # Envia o UID para o script PHP
+            response = send_uid_to_php(uid)
 
-        time.sleep(0.1)  # Aguarda 100ms antes de ler novamente
-
-except Exception as e:
-    # Trate qualquer exceção que ocorra
-    print(f"An error occurred: {e}")
-
-finally:
-    # Fecha a porta serial no final, independentemente de ocorrer uma exceção ou não
-    if serialInst.is_open:
-        serialInst.close()
+    time.sleep(0.1)  # Aguarda 100ms antes de ler novamente
