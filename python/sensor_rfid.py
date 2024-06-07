@@ -14,8 +14,6 @@ serialInst.baudrate = 9600
 serialInst.port = "COM5"  # Ajustar para a porta correta
 serialInst.open()
 
-print("Listening to the serial port...")
-
 # Lê os dados da porta serial e envia para o script PHP
 while True:
     if serialInst.in_waiting:
