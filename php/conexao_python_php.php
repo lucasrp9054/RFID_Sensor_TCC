@@ -8,8 +8,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Verifica e lida com o registro
     checkAndHandleRegistration($uid, $pdo);
     
-    echo "UID processed: $uid";
-} else {
-    echo "Invalid request method.";
 }
 
