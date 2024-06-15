@@ -21,5 +21,7 @@ while True:
         if uid:
             # Envia o UID para o script PHP
             response = send_uid_to_php(uid)
+            print(response)
 
     time.sleep(0.1)  # Aguarda 100ms antes de ler novamente
+
