@@ -93,3 +93,21 @@ function handleAlunoRegistration($uid_rfid, $pdo) {
     }
 }
 
+//Verificar se o RA bate com o banco de dados
+function validateRA($ra, $pdo){
+
+
+
+    firstAccess($ra, $pdo);
+
+}
+
+//Realiza o cadastro das informações faltantes no banco de dados
+function firstAccess($uid_rfid, $pdo){
+
+
+
+
+
+
+}
