@@ -47,7 +47,7 @@ function checkAndHandleRegistration($uid_rfid, $pdo) {
 
 
 
-// Função para lidar com registros de profissionais
+// Função para lidar com registros de profissionais na tabela de presença
 function handleProfissionalRegistration($uid_rfid, $pdo) {
     echo "Processando registro de profissional para UID: $uid_rfid\n";
     // Verifica se já existe um registro para o ID RFID na tabela de registros de profissionais
@@ -70,7 +70,7 @@ function handleProfissionalRegistration($uid_rfid, $pdo) {
     }
 }
 
-// Função para lidar com registros de alunos
+// Função para lidar com registros de alunos na tabela de presença
 function handleAlunoRegistration($uid_rfid, $pdo) {
     echo "Processando registro de aluno para UID: $uid_rfid\n";
     // Verifica se já existe um registro para o ID RFID na tabela de registros de alunos
