@@ -1,8 +1,8 @@
 <?php
 include '../bd/acesso_bd.php';
-include '../funcoes/login/login_functions.php';
+include '../funcoes/login/registro_functions.php';
 
-// Recupera o MA e a senha do formulário
+// Recupera os dados do formulário
 $ma = $_REQUEST['ma'];
 $senha = $_REQUEST['senha'];
 
@@ -12,6 +12,6 @@ if (empty($ma) || empty($senha)) {
     exit; // Encerre o script após a redireção
 }
 
-// Chama a função para validar o login
-validar_Login($ma, $senha, $pdo);
+// Verifica se o MA está cadastrado e atualiza sua senha no BD
+primeiro_acesso_profissional($ma, $senha, $pdo);
 

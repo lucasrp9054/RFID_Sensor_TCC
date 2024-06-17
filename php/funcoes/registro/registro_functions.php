@@ -1,5 +1,7 @@
 <?php
 include 'bd/acesso_bd.php';
+include '../funcoes/geral/utilidades.php';
+
 
 
 // Função para lidar com registros de profissionais na tabela de presença
@@ -119,3 +121,63 @@ function primeiro_acesso_aluno($ma, $nome, $data_nasc, $cpf, $email, $telefone, 
     
     header("Location: index.php");
 }
+
+function acrescentar_professor($uid_rfid, $nome, $data_nasc, $cpf, $email, $telefone, $cod_genero, $pdo) {
+    // Gerar um novo MA (supondo que essa função exista e funcione corretamente)
+    $novo_ma = gerar_novo_ma($pdo);
+
+    // Definir a consulta SQL para inserir um novo professor
+    $sql = "INSERT INTO tb_profissionais 
+            (ma, uid_rfid, nome, data_nascimento, cpf, email, telefone, cod_genero, cod_categoria, cod_status, data_registro) 
+            VALUES (:novo_ma, :uid_rfid, :nome, :data_nasc, :cpf, :email, :telefone, :cod_genero, :cod_categoria, :cod_status, NOW())";
+
+    // Preparar os parâmetros para a consulta SQL
+    $parameters = array(
+        ':novo_ma' => $novo_ma,
+        ':uid_rfid' => $uid_rfid,
+        ':nome' => $nome,
+        ':data_nasc' => $data_nasc,
+        ':cpf' => $cpf,
+        ':email' => $email,
+        ':telefone' => $telefone,
+        ':cod_genero' => $cod_genero,
+        ':cod_categoria' => 2, // Exemplo: definir o código de categoria para professor
+        ':cod_status' => 1 // Exemplo: definir o código de status adequado
+    );
+
+    // Preparar e executar a consulta SQL
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($parameters);
+
+    // Redirecionar para a página inicial após a inserção
+    header("Location: index.php");
+    exit; // Encerrar o script após o redirecionamento
+}
+
+
+function acrescentar_aluno($uid_rfid, $cod_categoria, $cod_curso, $pdo) {
+    // Gerar um novo MA (supondo que essa função exista e funcione corretamente)
+    $novo_ma = gerar_novo_ma($pdo);
+
+    // Definir a consulta SQL para inserir um novo aluno
+    $sql = "INSERT INTO tb_alunos 
+            (ma, uid_rfid, cod_categoria, cod_curso, data_registro) 
+            VALUES (:novo_ma, :uid_rfid, :cod_categoria, :cod_curso, NOW())";
+
+    // Preparar os parâmetros para a consulta SQL
+    $parameters = array(
+        ':novo_ma' => $novo_ma,
+        ':uid_rfid' => $uid_rfid,
+        ':cod_categoria' => $cod_categoria, // Utiliza o código de categoria fornecido
+        ':cod_curso' => $cod_curso // Utiliza o código de curso fornecido
+    );
+
+    // Preparar e executar a consulta SQL
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($parameters);
+
+    // Redirecionar para a página inicial após a inserção
+    header("Location: index.php");
+    exit; // Encerrar o script após o redirecionamento
+}
+
