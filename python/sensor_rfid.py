@@ -3,7 +3,7 @@ import time
 import requests
 
 def send_uid_to_php(uid):
-    url = 'http://localhost/rfid_sensor_tcc/php/conexao_python_php.php'  # URL do seu endpoint PHP
+    url = 'http://localhost/rfid_sensor_tcc/php/integracao/conexao_python_php.php'
     data = {'uid': uid}
     response = requests.post(url, data=data)
     return response.text

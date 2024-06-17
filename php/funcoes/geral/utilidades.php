@@ -5,7 +5,7 @@ include "funcoes/login/login_functions.php";
 
 
 // Função para verificar o ID RFID e chamar a função de registro apropriada
-function checkAndHandleRegistration($uid_rfid, $pdo) {
+function verificar_e_tratar_registro($uid_rfid, $pdo) {
     echo "Verificando UID: $uid_rfid\n";
 
     $uid_rfid = trim($uid_rfid);
