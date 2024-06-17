@@ -13,4 +13,4 @@ if (empty($ma)) {
 
 // Chama a função para verificar se o MA está cadastrado e se é o primeiro acesso
 existe_dados_vazios($ma, $pdo);
-?>
+

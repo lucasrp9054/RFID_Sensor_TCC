@@ -1,12 +1,8 @@
 <?php
-include 'bd/acesso_bd.php';
-
+include '../bd/acesso_bd.php';
 include '../funcoes/geral/utilidades.php';
-include "funcoes/login/login_functions.php"; // Inclui as funções relacionadas ao login
-include "funcoes\logout\logout_functions.php"; // Inclui as funções relacionadas ao logout
-
-
-
+include '../funcoes/login/login_functions.php';
+include '../funcoes/logout/logout_functions.php';
 
 // Função para lidar com registros de profissionais na tabela de presença
 function entrada_saida_profissionais($uid_rfid, $pdo) {
@@ -56,7 +52,6 @@ function entrada_saida_alunos($uid_rfid, $pdo) {
 
 // Função para verificar se é o primeiro acesso do profissional/aluno e redirecionar conforme necessário
 function existe_dados_vazios($ma, $pdo) {
-
     $sql_check = "SELECT senha FROM tb_profissionais WHERE ma = :ma";
     $stmt_check = $pdo->prepare($sql_check);
     $stmt_check->bindParam(':ma', $ma);
@@ -64,13 +59,12 @@ function existe_dados_vazios($ma, $pdo) {
     $result = $stmt_check->fetch(PDO::FETCH_ASSOC);
 
     if ($result) { // Profissional encontrado
-
         if (empty($result['senha'])) { // Senha vazia, redirecionar para cadastro de nova senha
-            // Implementar redirecionamento
+            // Implementar redirecionamento para formulário de cadastro de senha
+            header("Location: primeiro_acesso_professor.php?ma=$ma&tipo=2");
+            exit;
         }
-    }
-    else
-    { // Profissional não encontrado, procurar na tabela de alunos
+    } else { // Profissional não encontrado, procurar na tabela de alunos
         $sql_check = "SELECT senha FROM tb_alunos WHERE ma_aluno = :ma";
         $stmt_check = $pdo->prepare($sql_check);
         $stmt_check->bindParam(':ma', $ma);
@@ -78,22 +72,20 @@ function existe_dados_vazios($ma, $pdo) {
         $result = $stmt_check->fetch(PDO::FETCH_ASSOC);
     
         if ($result) { // Aluno encontrado
-
-            if (empty($result['senha'])) { // Senha vazia, redirecionar para formulário de cadastro
-                // Implementar redirecionamento
+            if (empty($result['senha'])) { // Senha vazia, redirecionar para formulário de cadastro de senha
+                // Implementar redirecionamento para formulário de cadastro de senha
+                header("Location: primeiro_acesso_aluno.php?ma=$ma&tipo=1");
+                exit;
             }
-        }
-        else
-        {
-            return 0; // Não é o primeiro acesso desse MA, tentar fazer o login
+        } else { // Nenhum registro encontrado para o MA
+            header("Location: login.php");
+            exit;
         }
     }
-    
 }
 
 // Função para definir a senha inicial do profissional no primeiro acesso
 function primeiro_acesso_profissional($ma, $senha, $pdo) {
-    
     $senha_md5 = md5($senha); // Transformando a senha em md5
     
     $sql = "UPDATE tb_profissionais SET senha = :senha WHERE ma = :ma";
@@ -101,8 +93,11 @@ function primeiro_acesso_profissional($ma, $senha, $pdo) {
     $stmt->bindParam(':senha', $senha_md5);
     $stmt->bindParam(':ma', $ma);
     $stmt->execute();
+
+    header("Location: login.php");
+    exit;
 }
-    
+
 // Função para definir as informações iniciais do aluno no primeiro acesso
 function primeiro_acesso_aluno($ma, $nome, $data_nasc, $cpf, $email, $telefone, $senha, $pdo) {
     $senha_md5 = md5($senha); // Transformando a senha em md5
@@ -122,10 +117,11 @@ function primeiro_acesso_aluno($ma, $nome, $data_nasc, $cpf, $email, $telefone, 
     $stmt->execute();
     
     // Redirecionar para a página de login
-    
-    header("Location: index.php");
+    header("Location: ../login.php?mensagem=Por favor, preencha todos os campos.");
+    exit;
 }
 
+// Função para adicionar um novo professor ao banco de dados
 function acrescentar_professor($uid_rfid, $nome, $data_nasc, $cpf, $email, $telefone, $cod_genero, $pdo) {
     // Gerar um novo MA (supondo que essa função exista e funcione corretamente)
     $novo_ma = gerar_novo_ma($pdo);
@@ -154,18 +150,18 @@ function acrescentar_professor($uid_rfid, $nome, $data_nasc, $cpf, $email, $tele
     $stmt->execute($parameters);
 
     // Redirecionar para a página inicial após a inserção
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit; // Encerrar o script após o redirecionamento
 }
 
-
+// Função para adicionar um novo aluno ao banco de dados
 function acrescentar_aluno($uid_rfid, $cod_categoria, $cod_curso, $pdo) {
     // Gerar um novo MA (supondo que essa função exista e funcione corretamente)
     $novo_ma = gerar_novo_ma($pdo);
 
     // Definir a consulta SQL para inserir um novo aluno
     $sql = "INSERT INTO tb_alunos 
-            (ma, uid_rfid, cod_categoria, cod_curso, data_registro) 
+            (ma_aluno, uid_rfid, cod_categoria, cod_curso, data_registro) 
             VALUES (:novo_ma, :uid_rfid, :cod_categoria, :cod_curso, NOW())";
 
     // Preparar os parâmetros para a consulta SQL
@@ -181,7 +177,7 @@ function acrescentar_aluno($uid_rfid, $cod_categoria, $cod_curso, $pdo) {
     $stmt->execute($parameters);
 
     // Redirecionar para a página inicial após a inserção
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit; // Encerrar o script após o redirecionamento
 }
 
