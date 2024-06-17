@@ -1,6 +1,6 @@
 <?php
-include 'banco_de_dados.php';
-include 'funcoes.php';
+include 'bd/acesso_bd.php';
+include "funcoes/login/login_functions.php";
 
 // Recupera o MA e a senha do formulário
 $ma = $_REQUEST['ma'];

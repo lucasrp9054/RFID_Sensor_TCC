@@ -1,7 +1,7 @@
 <?php
 include "acesso_bd.php";
-include "funcoes/registro/funcoes_para_registro.php";
-include "funcoes/login/funcoes_para_login.php";
+include "funcoes/registro/registro_functions.php";
+include "funcoes/login/login_functions.php";
 
 
 // Função para verificar o ID RFID e chamar a função de registro apropriada

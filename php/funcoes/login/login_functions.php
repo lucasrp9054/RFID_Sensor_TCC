@@ -1,5 +1,5 @@
 <?php
-include "acesso_bd.php";
+include 'bd/acesso_bd.php';
 
 
 // Função para validar o login de usuário (aluno, professor, coordenação)

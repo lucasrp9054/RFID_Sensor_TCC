@@ -1,5 +1,5 @@
 <?php
-include "acesso_bd.php";
+include 'bd/acesso_bd.php';
 
 
 // Função para lidar com registros de profissionais na tabela de presença
