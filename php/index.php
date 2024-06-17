@@ -2,25 +2,28 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página HTML Básica</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
+    <title>Dashboard</title>
 </head>
 <body>
     <header>
-        <h1>Minha Página HTML</h1>
+        <div class="info-header">
+            <div class="logo">
+                <h3>Dashboard</h3>
+            </div>
+            <div class="icons-header">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+        </div>
+        <div class="info-header">
+
+        </div>
     </header>
-    <nav>
-        <a href="#">Início</a>
-        <a href="#">Sobre</a>
-        <a href="#">Contato</a>
-    </nav>
-    <main>
-        <h2>Bem-vindo à minha página!</h2>
-        <p>Esta é uma página HTML básica com alguns elementos comuns, como cabeçalho, navegação, conteúdo principal e rodapé.</p>
-    </main>
-    <footer>
-        <p>&copy; 2024 Minha Página. Todos os direitos reservados.</p>
-    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+    
 </body>
 </html>
