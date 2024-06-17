@@ -9,20 +9,52 @@
     <title>Dashboard</title>
 </head>
 <body>
-    <header>
-        <div class="info-header">
-            <div class="logo">
-                <h3>Dashboard</h3>
+    <div class="container">
+        <aside>
+            <div class="topo">
+                <div class="logo">
+                    <img src="images/LOGO.png">
+                    <h2>ENG. COMP. <span class="danger"> TCC</span></h2>
+                </div>
+                <div>
+                    <div class="Fechar" id="fechar-bt">
+                        <span class="fa-solid fa-x">Fechar</span>
+                    </div>
+                </div>
             </div>
-            <div class="icons-header">
-                <i class="fa-solid fa-magnifying-glass"></i>
+
+<!--
+            Adicionar condição de acordo com o tipo de usuário da sessão
+-->
+
+            <div class="sidebar">
+                <a href="#">
+                    <span class="fa-solid fa-table-columns">grid-view</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="#">
+                    <span class="fa-solid fa-door-open">Registro</span>
+                    <h3>Registro</h3>
+                </a>
+                <a href="#">
+                    <span class="fa-solid fa-address-card">Dados</span>
+                    <h3>Dados</h3>
+                </a>
+                <a href="#">
+                    <span class="fa-solid fa-building-columns">Aulas</span>
+                    <h3>Aulas</h3>
+                </a>
+                <a href="#">
+                    <span class="fa-solid fa-envelope">Contato</span>
+                    <h3>Contato</h3>
+                </a>
+                <a href="#">
+                    <span class="fa-solid fa-right-to-bracket">Sair</span>
+                    <h3>Sair</h3>
+                </a>
             </div>
-        </div>
-        <div class="info-header">
-
-        </div>
-    </header>
-
+        </aside>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
     
 </body>

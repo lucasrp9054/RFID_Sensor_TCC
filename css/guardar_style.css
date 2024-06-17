@@ -1,0 +1,29 @@
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    
+}
+
+header{
+    background-color: #241633;
+    padding: 20px 2%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.info-header{
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+}
+
+.info-header img{
+
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+
+}
