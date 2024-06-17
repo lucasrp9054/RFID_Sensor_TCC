@@ -17,7 +17,7 @@
                     <h2>ENG. COMP. <span class="danger"> TCC</span></h2>
                 </div>
                 <div>
-                    <div class="Fechar" id="fechar-bt">
+                    <div class="Fechar" id="Fechar-bt">
                         <span class="fa-solid fa-x">Fechar</span>
                     </div>
                 </div>
@@ -33,23 +33,23 @@
                     <h3>Dashboard</h3>
                 </a>
                 <a href="#">
-                    <span class="fa-solid fa-door-open">Registro</span>
+                    <span class="fa-solid fa-door-open">grid-view</span>
                     <h3>Registro</h3>
                 </a>
                 <a href="#">
-                    <span class="fa-solid fa-address-card">Dados</span>
+                    <span class="fa-solid fa-address-card">grid-view</span>
                     <h3>Dados</h3>
                 </a>
                 <a href="#">
-                    <span class="fa-solid fa-building-columns">Aulas</span>
+                    <span class="fa-solid fa-building-columns">grid-view</span>
                     <h3>Aulas</h3>
                 </a>
                 <a href="#">
-                    <span class="fa-solid fa-envelope">Contato</span>
+                    <span class="fa-solid fa-envelope">grid-view</span>
                     <h3>Contato</h3>
                 </a>
                 <a href="#">
-                    <span class="fa-solid fa-right-to-bracket">Sair</span>
+                    <span class="fa-solid fa-envelope">grid-view</span>
                     <h3>Sair</h3>
                 </a>
             </div>
