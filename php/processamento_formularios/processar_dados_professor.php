@@ -12,6 +12,6 @@ if (empty($ma) || empty($senha)) {
     exit; // Encerre o script após a redireção
 }
 
-// Verifica se o MA está cadastrado e atualiza sua senha no BD
+// Como é o primeiro acesso do professor, insere as informações restantes no BD
 primeiro_acesso_profissional($ma, $senha, $pdo);
 

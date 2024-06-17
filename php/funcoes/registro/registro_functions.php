@@ -1,6 +1,10 @@
 <?php
 include 'bd/acesso_bd.php';
+
 include '../funcoes/geral/utilidades.php';
+include "funcoes/login/login_functions.php"; // Inclui as funções relacionadas ao login
+include "funcoes\logout\logout_functions.php"; // Inclui as funções relacionadas ao logout
+
 
 
 

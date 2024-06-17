@@ -1,7 +1,11 @@
 <?php
 include "acesso_bd.php"; // Inclui o arquivo de acesso ao banco de dados
+
 include "funcoes/registro/registro_functions.php"; // Inclui as funções relacionadas ao registro
 include "funcoes/login/login_functions.php"; // Inclui as funções relacionadas ao login
+include "funcoes\logout\logout_functions.php"; // Inclui as funções relacionadas ao logout
+
+
 
 /**
  * Função para verificar o ID RFID e chamar a função de registro apropriada

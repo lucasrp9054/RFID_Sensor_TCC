@@ -1,6 +1,11 @@
 <?php
 include 'bd/acesso_bd.php';
 
+include "funcoes\logout\logout_functions.php"; // Inclui as funções relacionadas ao logout
+include "funcoes/registro/registro_functions.php"; // Inclui as funções relacionadas ao registro
+include '../funcoes/geral/utilidades.php';
+
+
 
 // Função para validar o login de usuário (aluno, professor, coordenação)
 function validar_Login($ma, $senha, $pdo) {
