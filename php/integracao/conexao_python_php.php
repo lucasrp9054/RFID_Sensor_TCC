@@ -4,7 +4,7 @@
     error_reporting(E_ALL);
 
     include '../funcoes/geral/utilidades.php';
-    include '../bd/acesso_bd.php';
+    include 'acesso_bd.php';
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $uid = $_POST['uid'];

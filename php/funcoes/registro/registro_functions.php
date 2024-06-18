@@ -1,8 +1,6 @@
 <?php
 include '../../bd/acesso_bd.php';
-include '../geral/utilidades.php';
-include 'login_functions.php';
-include '../logout/logout_functions.php';
+
 
 // Função para lidar com registros de profissionais na tabela de presença
 function entrada_saida_profissionais($uid_rfid, $pdo) {
@@ -51,7 +49,7 @@ function entrada_saida_alunos($uid_rfid, $pdo) {
 }
 
 // Função para verificar se é o primeiro acesso do profissional/aluno e redirecionar conforme necessário
-function existe_dados_vazios($ma, $pdo) {
+function existe_dados_vazios($ma) {
     $sql_check = "SELECT senha FROM tb_profissionais WHERE ma = :ma";
     $stmt_check = $pdo->prepare($sql_check);
     $stmt_check->bindParam(':ma', $ma);

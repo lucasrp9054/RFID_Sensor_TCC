@@ -1,5 +1,5 @@
 <?php
-include 'bd/acesso_bd.php';
+include 'acesso_bd.php';
 
 include "funcoes\logout\logout_functions.php"; // Inclui as funções relacionadas ao logout
 include "funcoes/registro/registro_functions.php"; // Inclui as funções relacionadas ao registro
