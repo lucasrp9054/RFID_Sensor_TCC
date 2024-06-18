@@ -61,7 +61,7 @@ function existe_dados_vazios($ma, $pdo) {
     if ($result) { // Profissional encontrado
         if (empty($result['senha'])) { // Senha vazia, redirecionar para cadastro de nova senha
             // Implementar redirecionamento para formulário de cadastro de senha
-            header("Location: primeiro_acesso_professor.php?ma=$ma&tipo=2");
+            header("Location: php/primeiro_acesso/primeiro_acesso_aluno.php?ma=$ma&tipo=2");
             exit;
         }
     } else { // Profissional não encontrado, procurar na tabela de alunos
@@ -74,7 +74,7 @@ function existe_dados_vazios($ma, $pdo) {
         if ($result) { // Aluno encontrado
             if (empty($result['senha'])) { // Senha vazia, redirecionar para formulário de cadastro de senha
                 // Implementar redirecionamento para formulário de cadastro de senha
-                header("Location: primeiro_acesso_aluno.php?ma=$ma&tipo=1");
+                header("Location: php/primeiro_acesso/primeiro_acesso_aluno.php?ma=$ma&tipo=1");
                 exit;
             }
         } else { // Nenhum registro encontrado para o MA
@@ -94,7 +94,7 @@ function primeiro_acesso_profissional($ma, $senha, $pdo) {
     $stmt->bindParam(':ma', $ma);
     $stmt->execute();
 
-    header("Location: login.php");
+    header("Location: php/login.php");
     exit;
 }
 
@@ -117,7 +117,7 @@ function primeiro_acesso_aluno($ma, $nome, $data_nasc, $cpf, $email, $telefone, 
     $stmt->execute();
     
     // Redirecionar para a página de login
-    header("Location: ../login.php?mensagem=Por favor, preencha todos os campos.");
+    header("Location: ../php/login.php?mensagem=Por favor, preencha todos os campos.");
     exit;
 }
 
@@ -150,7 +150,7 @@ function acrescentar_professor($uid_rfid, $nome, $data_nasc, $cpf, $email, $tele
     $stmt->execute($parameters);
 
     // Redirecionar para a página inicial após a inserção
-    header("Location: ../index.php");
+    header("Location: ../php/index.php");
     exit; // Encerrar o script após o redirecionamento
 }
 
@@ -177,7 +177,7 @@ function acrescentar_aluno($uid_rfid, $cod_categoria, $cod_curso, $pdo) {
     $stmt->execute($parameters);
 
     // Redirecionar para a página inicial após a inserção
-    header("Location: ../index.php");
+    header("Location: ../php/index.php");
     exit; // Encerrar o script após o redirecionamento
 }
 
