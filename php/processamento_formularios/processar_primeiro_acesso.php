@@ -1,20 +1,23 @@
 <?php
-include '../php/bd/acesso_bd.php';
-include '..\..\funcoes/login\registro_functions.php';
+// Inclui o arquivo que contém a função existe_dados_vazios e a conexão com o banco de dados
+include '../../funcoes/login/registro_functions.php';
+include '../../bd/acesso_bd.php';
 
-// Recupera o MA do formulário
-$ma = $_REQUEST['ma'];
+// Verifica se o formulário foi submetido via método POST
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Verifica se o campo 'ma' foi enviado
+    if (isset($_POST['ma'])) {
+        // Captura o MA enviado pelo formulário
+        $ma = $_POST['ma'];
+        
+        // Chama a função existe_dados_vazios para processar o MA
+        existe_dados_vazios($ma, $pdo);
 
-// Verifica se o MA está vazio
-if (empty($ma)) {
-    header("Location: ../login.php?mensagem=Por favor, insira seu MA.");
-    exit; // Encerre o script após a redireção
+        // Exemplo de redirecionamento após o processamento
+        header("Location: login.php");
+        exit;
+    } else {
+        // Caso o campo 'ma' não tenha sido enviado, faça algo (exibir mensagem de erro, redirecionar de volta etc.)
+    }
 }
-
-// Chama a função para verificar se o MA está cadastrado e se é o primeiro acesso
-if (function_exists('existe_dados_vazios')) {
-    existe_dados_vazios($ma, $pdo);
-} else {
-    die('A função existe_dados_vazios não está definida.');
-}
-
+?>
