@@ -1,6 +1,6 @@
 <?php
 // Inclui o arquivo que contém a função existe_dados_vazios e a conexão com o banco de dados
-include '../../funcoes/login/registro_functions.php';
+include '../../funcoes/registro/registro_functions.php';
 include '../../bd/acesso_bd.php';
 
 // Verifica se o formulário foi submetido via método POST
