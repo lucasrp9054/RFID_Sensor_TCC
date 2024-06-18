@@ -1,9 +1,9 @@
 <?php
-include "acesso_bd.php"; // Inclui o arquivo de acesso ao banco de dados
+include "../php/acesso_bd.php"; // Inclui o arquivo de acesso ao banco de dados
 
-include "funcoes/registro/registro_functions.php"; // Inclui as funções relacionadas ao registro
-include "funcoes/login/login_functions.php"; // Inclui as funções relacionadas ao login
-include "funcoes\logout\logout_functions.php"; // Inclui as funções relacionadas ao logout
+include "../php/funcoes/registro/registro_functions.php"; // Inclui as funções relacionadas ao registro
+include "../php/funcoes/login/login_functions.php"; // Inclui as funções relacionadas ao login
+include "../php/funcoes\logout\logout_functions.php"; // Inclui as funções relacionadas ao logout
 
 
 
