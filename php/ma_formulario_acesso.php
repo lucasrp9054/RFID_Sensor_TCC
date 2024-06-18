@@ -49,7 +49,7 @@
                         </div>
                         <h6 class="mb-20 text-center">Digite seu MA para verificarmos</h6>
 
-                        <form action="../php/formularios/processar_primeiro_acesso.php" method="POST">
+                        <form action="formularios/processar_primeiro_acesso.php" method="POST">
                             <div class="input-group custom">
                                 <input type="text" name="ma" class="form-control form-control-lg" placeholder="MA" required>
                                 <div class="input-group-append custom">
