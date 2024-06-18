@@ -1,8 +1,8 @@
 <?php
-include '../bd/acesso_bd.php';
-include '../funcoes/geral/utilidades.php';
-include '../funcoes/login/login_functions.php';
-include '../funcoes/logout/logout_functions.php';
+include '../../bd/acesso_bd.php';
+include '../geral/utilidades.php';
+include 'login_functions.php';
+include '../logout/logout_functions.php';
 
 // Função para lidar com registros de profissionais na tabela de presença
 function entrada_saida_profissionais($uid_rfid, $pdo) {
