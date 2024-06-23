@@ -23,15 +23,10 @@
 							<span class="micon dw dw-calendar1"></span><span class="mtext"> Grade Horária</span>
 						</a>
 					</li>
-					
-					
-					<li class="dropdown">
-						<a href="javascript:;" class="dropdown-toggle">
-							<span class="micon dw dw-right-arrow1"></span><span class="mtext">Alterar</span>
+					<li>
+						<a href="listar_usuarios.php" class="dropdown-toggle no-arrow">
+							<span class="micon dw dw-book"></span><span class="mtext"> Listas</span>
 						</a>
-						<ul class="submenu">
-							<li><a href="login.php">Login</a></li>	
-						</ul>
 					</li>
 
 <!-- Divisão da Barra de navegação -->

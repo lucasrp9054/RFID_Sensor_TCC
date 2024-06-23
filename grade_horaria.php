@@ -191,6 +191,9 @@ $caminho_imagem = obter_caminho_imagem($ma_user, $cod_categoria,$pdo);
 					</div>
 				</div>
 			</div>
+			<div class="footer-wrap pd-20 mb-20 card-box">
+				Engenharia da Computação - Lucas Ribeiro e Líbano Abboud
+			</div>
 		</div>
 	</div>
 

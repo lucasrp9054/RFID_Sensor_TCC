@@ -31,7 +31,7 @@ if (isset($_POST['ma_perfil'])) {
     exit();
 }
 
-// A partir daqui, o código continua como antes, utilizando $usuario para acessar os dados do perfil visitado
+// A partir daqui, o código continua como antes, utilizando $perfil_usuario para acessar os dados do perfil visitado
 $nome = $perfil_usuario['nome']; // Obtém o nome do usuário
 
 // Obtém o gênero do usuário com base no código de gênero
@@ -42,8 +42,8 @@ $categoria = obter_cargo($perfil_usuario['cod_categoria'], $perfil_usuario['cod_
 
 $data_registro = $perfil_usuario['data_registro'];
 $data_formatada = date("d/m/Y", strtotime($data_registro)); // Formata a data de registro para o formato dd/mm/aaaa
-
 ?>
+
 
 
 <!DOCTYPE html>

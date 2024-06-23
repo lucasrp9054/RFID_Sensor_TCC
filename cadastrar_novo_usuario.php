@@ -31,7 +31,7 @@ $graduacoes = listar_graduacoes($pdo);
 <head>
     <!-- Basic Page Info -->
     <meta charset="utf-8">
-    <title>cadastro</title>
+    <title>Cadastro</title>
 
     <!-- Site favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="vendors/images/apple-touch-icon.png">
@@ -146,22 +146,7 @@ $graduacoes = listar_graduacoes($pdo);
 
     <?php include "config_layout_menu.php"; ?>
 
-    <?php
-    switch ($cod_categoria) {
-        case 1:
-            include "menu_lateral_aluno.php";
-            break;
-        case 2:
-            include "menu_lateral_professor.php";
-            break;
-        case 3:
-            include "menu_lateral_coordenacao.php";
-            break;
-        default:
-            // Código adicional para lidar com categorias desconhecidas
-            break;
-    }
-    ?>
+    <?php include "menu_lateral_coordenacao.php";?>
 
     <div class="mobile-menu-overlay"></div>
 
@@ -284,6 +269,9 @@ $graduacoes = listar_graduacoes($pdo);
 
                 </div>
             </div>
+            <div class="footer-wrap pd-20 mb-20 card-box">
+				Engenharia da Computação - Lucas Ribeiro e Líbano Abboud
+			</div>
         </div>
     </div>
 	

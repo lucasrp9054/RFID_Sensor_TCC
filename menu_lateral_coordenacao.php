@@ -28,6 +28,11 @@
 							<span class="micon dw dw-book"></span><span class="mtext"> Cadastros</span>
 						</a>
 					</li>
+					<li>
+						<a href="listar_usuarios.php" class="dropdown-toggle no-arrow">
+							<span class="micon dw dw-book"></span><span class="mtext"> Listas</span>
+						</a>
+					</li>
 					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">
 							<span class="micon dw dw-right-arrow1"></span><span class="mtext">Atualizar</span>
@@ -49,7 +54,7 @@
 						<div class="sidebar-small-cap">Coordenação</div>
 					</li>
 					<li>
-						<a href="https://dropways.github.io/deskapp-free-single-page-website-template/" target="_blank" class="dropdown-toggle no-arrow">
+						<a href="#" class="dropdown-toggle no-arrow">
 							<span class="micon dw dw-paper-plane1"></span>
 							<span class="mtext"> Coordenação#1 <img src="vendors/images/coming-soon.png" alt="" width="25"></span>
 						</a>

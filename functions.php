@@ -895,3 +895,35 @@ function listar_graduacoes($pdo){
 
     return $graduacoes;
 }
+
+function listar_alunos($pdo){
+
+    $stmt = $pdo->query("
+        SELECT a.ma_aluno, a.uid_rfid, a.nome, a.data_registro , g.graduacao AS curso
+        FROM tb_alunos a
+        JOIN tb_graduacoes g ON a.cod_curso = g.cod_graduacao
+    ");
+    $alunos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return $alunos;
+}
+
+function listar_professores($pdo){
+    $stmt = $pdo->query("SELECT ma, uid_rfid, nome, data_registro FROM tb_profissionais WHERE cod_categoria = 2
+    ");
+    $professores = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return $professores;
+}
+
+
+
+function listar_coordenadores($pdo){
+    $stmt = $pdo->query("SELECT ma, uid_rfid, nome, data_registro FROM tb_profissionais WHERE cod_categoria = 3
+    ");
+    $coordenadores = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return $coordenadores;
+}
+
+
