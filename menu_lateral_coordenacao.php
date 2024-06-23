@@ -25,7 +25,7 @@
 					</li>
 					<li>
 						<a href="cadastrar_novo_usuario.php" class="dropdown-toggle no-arrow">
-							<span class="micon dw dw-right-arrow1"></span><span class="mtext"> Cadastros</span>
+							<span class="micon dw dw-book"></span><span class="mtext"> Cadastros</span>
 						</a>
 					</li>
 					<li class="dropdown">

@@ -378,7 +378,7 @@ function acrescentar_professor($uid_rfid, $nome, $data_nasc, $cpf, $email, $tele
     $stmt->execute($parameters);
 
     // Redirecionar para a página inicial após a inserção
-    header("Location: index.php");
+    header("Location: cadastrar_novo_usuario.php?mensagem=Professor cadastrado com sucesso.");
     exit; // Encerrar o script após o redirecionamento
 }
 
@@ -406,7 +406,7 @@ function acrescentar_aluno($nome, $uid_rfid, $cod_categoria, $cod_curso, $pdo) {
     $stmt->execute($parameters);
 
     // Redirecionar para a página inicial após a inserção
-    header("Location: index.php");
+    header("Location: cadastrar_novo_usuario.php?mensagem=Aluno cadastrado com sucesso.");
     exit; // Encerrar o script após o redirecionamento
 }
 
@@ -846,7 +846,7 @@ function contar_dados_index($ma, $tipo, $op, $pdo){
                     SELECT a.area 
                     FROM tb_coordenacao_area ca
                     INNER JOIN tb_areas a ON ca.cod_area = a.cod_area
-                    WHERE ca.ma_prof = :ma
+                    WHERE ca.ma_coordenacao = :ma
                 ");
                 $stmt->bindParam(':ma', $ma);
                 $stmt->execute();
@@ -858,7 +858,7 @@ function contar_dados_index($ma, $tipo, $op, $pdo){
                     SELECT COUNT(pa.id_prof_area) AS qtd_professores
                     FROM tb_professores_areas pa
                     INNER JOIN tb_coordenacao_area ca ON pa.cod_area = ca.cod_area
-                    WHERE ca.ma_prof = :ma
+                    WHERE ca.ma_coordenacao = :ma
                 ");
                 $stmt->bindParam(':ma', $ma, PDO::PARAM_STR);
                 $stmt->execute();

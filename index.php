@@ -55,6 +55,18 @@ else
 	$box_4 = contar_dados_index($ma_user, $cod_categoria, '4', $pdo);
 }
 
+
+$stmt = $pdo->prepare("
+    SELECT p.nome AS nome_professor, p.ma_prof, a.area, COUNT(f.ma_prof) AS faltas_mes, SUM(f.falta) AS faltas_semestre
+    FROM tb_professores p
+    LEFT JOIN tb_coordenacao_area ca ON p.ma_prof = ca.ma_prof
+    LEFT JOIN tb_areas a ON ca.cod_area = a.cod_area
+    LEFT JOIN tb_faltas f ON p.ma_prof = f.ma_prof
+    GROUP BY p.ma_prof
+");
+$stmt->execute();
+$professores = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 
@@ -428,3 +440,15 @@ else
 	<script src="vendors/scripts/dashboard.js"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
