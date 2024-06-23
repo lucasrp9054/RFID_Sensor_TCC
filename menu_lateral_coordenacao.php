@@ -46,7 +46,7 @@
 						<div class="dropdown-divider"></div>
 					</li>
 					<li>
-						<div class="sidebar-small-cap">Extra</div>
+						<div class="sidebar-small-cap">Coordenação</div>
 					</li>
 					<li>
 						<a href="https://dropways.github.io/deskapp-free-single-page-website-template/" target="_blank" class="dropdown-toggle no-arrow">
