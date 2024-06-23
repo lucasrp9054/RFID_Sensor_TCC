@@ -2537,30 +2537,44 @@ body.IE .register-page-wrap .container{
 	sitemap Start
 ==============================================================*/
 /*==============================================================
-	Calendar Start
+    Calendar Styles
 ==============================================================*/
-.calendar-wrap{}
-.calendar-wrap .fc-event.ui-draggable-handle{
-	padding: 5px;
-	margin-bottom: 5px;
+
+/* General Calendar Wrapper */
+.calendar-wrap {}
+
+/* Event Style */
+.calendar-wrap .fc-event.ui-draggable-handle {
+    padding: 5px;
+    margin-bottom: 5px;
 }
-.fc th{
-	font-weight: 500;
-	padding: 10px !important;
-	background: #e1e1f5;
+
+/* Table Header Style */
+.fc th {
+    font-weight: 500;
+    padding: 10px !important;
+    background: #e1e1f5;
 }
-.fc-day-grid-event .fc-time{
-	font-weight: 500 !important;
+
+/* Event Time Style */
+.fc-day-grid-event .fc-time {
+    font-weight: 500 !important;
 }
-.fc-day-grid-event .fc-content{
-	padding: 3px 9px;
+
+/* Event Content Style */
+.fc-day-grid-event .fc-content {
+    padding: 3px 9px;
 }
-.fc-header-toolbar h2{
-	font-size: 24px;
+
+/* Calendar Header Toolbar */
+.fc-header-toolbar h2 {
+    font-size: 24px;
 }
+
 /*==============================================================
-	Calendar End
+    End of Calendar Styles
 ==============================================================*/
+
 /*==============================================================
 	Blog Start
 ==============================================================*/

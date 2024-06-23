@@ -27,7 +27,7 @@ Antes de iniciar, certifique-se de ter instalado:
    - Abra um terminal ou prompt de comando.
    - Navegue até a pasta onde está localizado o script Python:
      
-     cd C:\xampp\htdocs\RFID_Sensor_TCC\python
+     cd C:\xampp\htdocs\rfid_sensor_tcc_2\python
      
    - Execute o script Python para iniciar a leitura do sensor RFID:
      
@@ -50,3 +50,22 @@ Antes de iniciar, certifique-se de ter instalado:
 ## Contribuição
 
 - Para contribuir com melhorias, abra uma issue ou envie um pull request.
+
+
+Novas tabelas
+
+CREATE TABLE tb_aluno_foto (
+id_aluno_foto INT AUTO_INCREMENT PRIMARY KEY,
+ma_aluno VARCHAR(8) NOT NULL,
+nome_imagem VARCHAR(50) NOT NULL,
+data_upload DATETIME NOT NULL,
+FOREIGN KEY (ma_aluno) REFERENCES tb_alunos(ma_aluno)
+);
+
+CREATE TABLE tb_profissional_foto (
+id_profissional_foto INT AUTO_INCREMENT PRIMARY KEY,
+ma_profissional VARCHAR(8) NOT NULL,
+nome_imagem VARCHAR(50) NOT NULL,
+data_upload DATETIME NOT NULL,
+FOREIGN KEY (ma_profissional) REFERENCES tb_profissionais(ma)
+);
