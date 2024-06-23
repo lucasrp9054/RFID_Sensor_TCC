@@ -23,17 +23,10 @@
 							<span class="micon dw dw-calendar1"></span><span class="mtext"> Grade Horária</span>
 						</a>
 					</li>
-
-					<li class="dropdown">
-						<a href="javascript:;" class="dropdown-toggle">
-							<span class="micon dw dw-right-arrow1"></span><span class="mtext">Cadastrar</span>
+					<li>
+						<a href="cadastrar_novo_usuario.php" class="dropdown-toggle no-arrow">
+							<span class="micon dw dw-right-arrow1"></span><span class="mtext"> Cadastros</span>
 						</a>
-						<ul class="submenu">
-							<li><a href="login.php">Aluno</a></li>	
-						</ul>
-						<ul class="submenu">
-							<li><a href="login.php">Professor</a></li>	
-						</ul>
 					</li>
 					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">

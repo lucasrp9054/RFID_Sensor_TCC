@@ -180,7 +180,7 @@ function gerar_novo_ma($pdo) {
         }
 
         // Verificar se o MA já existe na tabela tb_alunos
-        $sql_check_aluno = "SELECT COUNT(*) as count FROM tb_alunos WHERE ma = :ma_aluno";
+        $sql_check_aluno = "SELECT COUNT(*) as count FROM tb_alunos WHERE ma_aluno = :ma_aluno";
         $stmt_check_aluno = $pdo->prepare($sql_check_aluno);
         $stmt_check_aluno->bindParam(':ma_aluno', $ma_gerado);
         $stmt_check_aluno->execute();
