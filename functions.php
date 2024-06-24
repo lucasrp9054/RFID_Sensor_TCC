@@ -301,6 +301,48 @@ function existe_dados_vazios($ma, $pdo) {
     exit;
 }
 
+// Função para atualizar os dados do aluno no primeiro acesso
+function primeiro_acesso_aluno($ma, $cod_genero, $telefone, $data_nascimento, $cpf, $email, $senha_md5, $pdo) {
+    try {
+        // Prepara a consulta SQL para atualizar os dados do aluno na tabela tb_alunos
+        $sql = "UPDATE tb_alunos SET 
+                cod_genero = :cod_genero, 
+                telefone = :telefone, 
+                data_nascimento = :data_nascimento, 
+                cpf = :cpf, 
+                email = :email, 
+                senha = :senha 
+                WHERE ma_aluno = :ma";
+        $stmt = $pdo->prepare($sql);
+        
+        // Liga os parâmetros aos valores recebidos pela função
+        $stmt->bindParam(':ma', $ma);
+        $stmt->bindParam(':cod_genero', $cod_genero);
+        $stmt->bindParam(':telefone', $telefone);
+        $stmt->bindParam(':data_nascimento', $data_nascimento);
+        $stmt->bindParam(':cpf', $cpf);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':senha', $senha_md5);
+        
+        // Executa a consulta SQL
+        if ($stmt->execute()) {
+            // Redireciona para uma página de sucesso
+            header("Location: login.php?sucesso=Dados atualizados com sucesso.");
+        } else {
+            // Em caso de erro, redireciona de volta para o formulário com uma mensagem de erro
+            header("Location: primeiro_acesso_aluno.php?ma=$ma&mensagem=Erro ao atualizar os dados. Por favor, tente novamente.");
+        }
+    } catch (PDOException $e) {
+        // Em caso de exceção, redireciona de volta para o formulário com uma mensagem de erro
+        header("Location: primeiro_acesso_aluno.php?ma=$ma&mensagem=Erro ao atualizar os dados: " . $e->getMessage());
+    }
+    exit;
+}
+
+
+
+
+
 
 
 // Função para definir a senha inicial do profissional no primeiro acesso
