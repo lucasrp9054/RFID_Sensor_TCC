@@ -151,7 +151,19 @@ $coordenadores = listar_coordenadores($pdo);
 
     <?php include "config_layout_menu.php"; ?>
 
-    <?php include "menu_lateral_coordenacao.php";?>
+    <?php
+    switch ($cod_categoria) {
+        case 1:
+            include "menu_lateral_aluno.php";
+            break;
+        case 2:
+            include "menu_lateral_professor.php";
+            break;
+        case 3:
+            include "menu_lateral_coordenacao.php";
+            break;
+    }
+    ?>  
 
     <div class="mobile-menu-overlay"></div>
 
