@@ -11,7 +11,8 @@ if (
     isset($_REQUEST['cpf']) && 
     isset($_REQUEST['email']) && 
     isset($_REQUEST['telefone']) && 
-    isset($_REQUEST['cod_genero'])
+    isset($_REQUEST['cod_genero']) && 
+    isset($_REQUEST['cod_area'])
 ) {
     // Recupera os dados do formulário
     $uid_rfid = $_REQUEST['uid_rfid'];
@@ -21,6 +22,7 @@ if (
     $email = $_REQUEST['email'];
     $telefone = $_REQUEST['telefone'];
     $cod_genero = $_REQUEST['cod_genero'];
+    $cod_area = $_REQUEST['cod_area'];
 
     // Verifica se algum dos campos essenciais está vazio
     if (empty($uid_rfid) || empty($nome) || empty($data_nasc) || empty($cpf) || empty($email) || empty($telefone) || empty($cod_genero)) {
@@ -29,7 +31,7 @@ if (
     }
 
     // Chama a função para acrescentar um novo professor
-    acrescentar_professor($uid_rfid, $nome, $data_nasc, $cpf, $email, $telefone, $cod_genero, $pdo);
+    acrescentar_professor($uid_rfid, $nome, $data_nasc, $cpf, $email, $telefone, $cod_genero,$cod_area, $pdo);
 
     // Redireciona para a página inicial após o registro
     header("Location: index.php");

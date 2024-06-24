@@ -323,64 +323,68 @@ function primeiro_acesso_profissional($ma, $senha, $pdo) {//Funcionando
 }
 
 // Função para atualizar os dados do aluno no banco de dados
-function primeiro_acesso_aluno($ma, $cod_genero, $telefone, $data_nascimento, $cpf, $email, $senha_md5, $pdo) {//Funcionando
-    // Consulta SQL para inserir os dados do aluno
-    $sql = "UPDATE tb_alunos 
-            SET data_nascimento = :data_nascimento, cod_genero =:cod_genero, cpf = :cpf, email = :email, telefone =:telefone ,senha = :senha 
-            WHERE ma_aluno = :ma";
+function acrescentar_professor($uid_rfid, $nome, $data_nasc, $cpf, $email, $telefone, $cod_genero, $cod_area, $pdo) {
+    try {
+        // Iniciar uma transação
+        $pdo->beginTransaction();
 
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':data_nascimento', $data_nascimento);
-    $stmt->bindParam(':cod_genero', $cod_genero);
-    $stmt->bindParam(':telefone', $telefone);
-    $stmt->bindParam(':cpf', $cpf);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':senha', $senha_md5);
-    $stmt->bindParam(':ma', $ma);
+        // Gerar novo MA
+        $novo_ma = gerar_novo_ma($pdo);
 
-    if ($stmt->execute()) {
-        // Redireciona para uma página de sucesso
-        header("Location: login.php?sucesso=Dados atualizados com sucesso.");
-    } else {
-        // Em caso de erro, redireciona de volta para o formulário com uma mensagem de erro
-        header("Location: primeiro_acesso_aluno.php?ma=$ma&mensagem=Erro ao processar os dados. Por favor, tente novamente.");
+        // Definir a consulta SQL para inserir um novo professor
+        $sql_profissionais = "INSERT INTO tb_profissionais 
+                              (ma, uid_rfid, nome, data_nascimento, cpf, email, telefone, cod_genero, cod_categoria, cod_status, data_registro) 
+                              VALUES (:novo_ma, :uid_rfid, :nome, :data_nasc, :cpf, :email, :telefone, :cod_genero, :cod_categoria, :cod_status, NOW())";
+
+        // Preparar os parâmetros para a consulta SQL
+        $parameters_profissionais = array(
+            ':novo_ma' => $novo_ma,
+            ':uid_rfid' => $uid_rfid,
+            ':nome' => $nome,
+            ':data_nasc' => $data_nasc,
+            ':cpf' => $cpf,
+            ':email' => $email,
+            ':telefone' => $telefone,
+            ':cod_genero' => $cod_genero,
+            ':cod_categoria' => 2, // Exemplo: definir o código de categoria para professor
+            ':cod_status' => 1 // Exemplo: definir o código de status adequado
+        );
+
+        // Preparar e executar a consulta SQL para tb_profissionais
+        $stmt = $pdo->prepare($sql_profissionais);
+        $stmt->execute($parameters_profissionais);
+
+        // Definir a consulta SQL para inserir na tabela tb_professores_areas
+        $sql_areas = "INSERT INTO tb_professores_areas (ma_prof, cod_area) VALUES (:novo_ma, :cod_area)";
+        
+        // Preparar os parâmetros para a consulta SQL
+        $parameters_areas = array(
+            ':novo_ma' => $novo_ma,
+            ':cod_area' => $cod_area
+        );
+
+        // Preparar e executar a consulta SQL para tb_professores_areas
+        $stmt = $pdo->prepare($sql_areas);
+        $stmt->execute($parameters_areas);
+
+        // Confirmar a transação
+        $pdo->commit();
+        
+        // Redirecionar com mensagem de sucesso
+        header("Location: cadastrar_novo_usuario.php?mensagem=Professor cadastrado com sucesso.");
+        exit;
+
+    } catch (Exception $e) {
+        // Reverter a transação em caso de erro
+        $pdo->rollBack();
+        // Registrar ou exibir a mensagem de erro
+        error_log($e->getMessage());
+        header("Location: cadastrar_novo_usuario.php?mensagem=Erro ao cadastrar professor.");
+        exit;
     }
-    exit;
 }
 
 
-// Função para adicionar um novo professor ao banco de dados
-function acrescentar_professor($uid_rfid, $nome, $data_nasc, $cpf, $email, $telefone, $cod_genero, $pdo) {//Não testado
-    // Gerar um novo MA (supondo que essa função exista e funcione corretamente)
-    $novo_ma = gerar_novo_ma($pdo);
-
-    // Definir a consulta SQL para inserir um novo professor
-    $sql = "INSERT INTO tb_profissionais 
-            (ma, uid_rfid, nome, data_nascimento, cpf, email, telefone, cod_genero, cod_categoria, cod_status, data_registro) 
-            VALUES (:novo_ma, :uid_rfid, :nome, :data_nasc, :cpf, :email, :telefone, :cod_genero, :cod_categoria, :cod_status, NOW())";
-
-    // Preparar os parâmetros para a consulta SQL
-    $parameters = array(
-        ':novo_ma' => $novo_ma,
-        ':uid_rfid' => $uid_rfid,
-        ':nome' => $nome,
-        ':data_nasc' => $data_nasc,
-        ':cpf' => $cpf,
-        ':email' => $email,
-        ':telefone' => $telefone,
-        ':cod_genero' => $cod_genero,
-        ':cod_categoria' => 2, // Exemplo: definir o código de categoria para professor
-        ':cod_status' => 1 // Exemplo: definir o código de status adequado
-    );
-
-    // Preparar e executar a consulta SQL
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute($parameters);
-
-    // Redirecionar para a página inicial após a inserção
-    header("Location: cadastrar_novo_usuario.php?mensagem=Professor cadastrado com sucesso.");
-    exit; // Encerrar o script após o redirecionamento
-}
 
 // Função para adicionar um novo aluno ao banco de dados
 function acrescentar_aluno($nome, $uid_rfid, $cod_categoria, $cod_curso, $pdo) {//Não testado
@@ -891,6 +895,14 @@ function listar_graduacoes($pdo){
 
     // Query para obter os cursos de graduação
     $stmt = $pdo->query("SELECT cod_graduacao, graduacao FROM tb_graduacoes");
+    $graduacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return $graduacoes;
+}
+function listar_areas($pdo){
+
+    // Query para obter os cursos de graduação
+    $stmt = $pdo->query("SELECT cod_area, area FROM tb_areas");
     $graduacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     return $graduacoes;

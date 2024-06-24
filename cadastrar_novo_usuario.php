@@ -23,6 +23,7 @@ $cod_categoria = $usuario['cod_categoria'];
 $caminho_imagem = obter_caminho_imagem($ma_user, $cod_categoria, $pdo);
 
 $graduacoes = listar_graduacoes($pdo);
+$areas = listar_areas($pdo);
 
 ?>
 
@@ -259,6 +260,19 @@ $graduacoes = listar_graduacoes($pdo);
                                     <option value="1">Masculino</option>
                                     <option value="2">Feminino</option>
                                     <option value="3">Outro</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 col-form-label">Área de Ensino</label>
+                            <div class="col-sm-12 col-md-10">
+                                <select name="cod_area" class="custom-select col-12" required>
+                                    <option selected>Escolha...</option>
+                                    <?php foreach ($areas as $area): ?>
+                                        <option value="<?php echo htmlspecialchars($area['cod_area']); ?>">
+                                            <?php echo htmlspecialchars($area['area']); ?>
+                                        </option>
+										<?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
