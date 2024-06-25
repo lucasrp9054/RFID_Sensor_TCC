@@ -30,7 +30,7 @@
 					</li>
 					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">
-							<span class="micon fa fa-list"></span><span class="mtext"> Listas</span>
+							<span class="micon fa fa-list"></span><span class="mtext"> Registros </span>
 						</a>
 						<ul class="submenu">
 							<li><a href="listar_usuarios.php"> Usuários </a></li>

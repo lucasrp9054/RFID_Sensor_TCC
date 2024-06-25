@@ -174,12 +174,12 @@ $registros_professores = listar_registros('2' ,$pdo);
                     <div class="row">
                         <div class="col-md-6 col-sm-12">
                             <div class="title">
-                                <h4>Listas</h4>
+                                <h4>Histórico de Entrada e Saída</h4>
                             </div>
                             <nav aria-label="breadcrumb" role="navigation">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Listas</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Histórico</li>
                                 </ol>
                             </nav>
                         </div>
@@ -307,35 +307,35 @@ $registros_professores = listar_registros('2' ,$pdo);
                     extend: 'copy',
                     text: 'Copiar',
                     title: function() {
-                        return 'Lista de Alunos'; // Título personalizado para a tabela de Alunos
+                        return 'Histórico de Entrada/Saída de Alunos'; // Título personalizado para a tabela de Alunos
                     }
                 },
                 {
                     extend: 'csv',
                     text: 'CSV',
                     title: function() {
-                        return 'Lista de Alunos'; // Título personalizado para a tabela de Alunos
+                        return 'Histórico de Entrada/Saída de Alunos'; // Título personalizado para a tabela de Alunos
                     }
                 },
                 {
                     extend: 'excel',
                     text: 'Excel',
                     title: function() {
-                        return 'Lista de Alunos'; // Título personalizado para a tabela de Alunos
+                        return 'Histórico de Entrada/Saída de Alunos'; // Título personalizado para a tabela de Alunos
                     }
                 },
                 {
                     extend: 'pdf',
                     text: 'PDF',
                     title: function() {
-                        return 'Lista de Alunos'; // Título personalizado para a tabela de Alunos
+                        return 'Histórico de Entrada/Saída de Alunos'; // Título personalizado para a tabela de Alunos
                     }
                 },
                 {
                     extend: 'print',
                     text: 'Imprimir',
                     title: function() {
-                        return 'Lista de Alunos'; // Título personalizado para a tabela de Alunos
+                        return 'Histórico de Entrada/Saída de Alunos'; // Título personalizado para a tabela de Alunos
                     }
                 }
             ]
@@ -352,35 +352,35 @@ $registros_professores = listar_registros('2' ,$pdo);
                     extend: 'copy',
                     text: 'Copiar',
                     title: function() {
-                        return 'Lista de Professores'; // Título personalizado para a tabela de Professores
+                        return 'Histórico de Entrada/Saída de Professores'; // Título personalizado para a tabela de Alunos
                     }
                 },
                 {
                     extend: 'csv',
                     text: 'CSV',
                     title: function() {
-                        return 'Lista de Professores'; // Título personalizado para a tabela de Professores
+                        return 'Histórico de Entrada/Saída de Professores'; // Título personalizado para a tabela de Alunos
                     }
                 },
                 {
                     extend: 'excel',
                     text: 'Excel',
                     title: function() {
-                        return 'Lista de Professores'; // Título personalizado para a tabela de Professores
+                        return 'Histórico de Entrada/Saída de Professores'; // Título personalizado para a tabela de Alunos
                     }
                 },
                 {
                     extend: 'pdf',
                     text: 'PDF',
                     title: function() {
-                        return 'Lista de Professores'; // Título personalizado para a tabela de Professores
+                        return 'Histórico de Entrada/Saída de Professores'; // Título personalizado para a tabela de Alunos
                     }
                 },
                 {
                     extend: 'print',
                     text: 'Imprimir',
                     title: function() {
-                        return 'Lista de Professores'; // Título personalizado para a tabela de Professores
+                        return 'Histórico de Entrada/Saída de Professores'; // Título personalizado para a tabela de Alunos
                     }
                 }
             ]

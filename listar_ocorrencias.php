@@ -25,6 +25,8 @@ $caminho_imagem = obter_caminho_imagem($ma_user, $cod_categoria, $pdo);
 $alunos = listar_alunos($pdo);
 $professores = listar_professores($pdo);
 $coordenadores = listar_coordenadores($pdo);
+
+$ocorrencias_professores = listar_ocorrencias('2', $pdo);
 ?>
 
 <!DOCTYPE html>
@@ -175,12 +177,12 @@ $coordenadores = listar_coordenadores($pdo);
                     <div class="row">
                         <div class="col-md-6 col-sm-12">
                             <div class="title">
-                                <h4>Listas</h4>
+                                <h4>Histórico de Ocorrências</h4>
                             </div>
                             <nav aria-label="breadcrumb" role="navigation">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Listas</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Ocorrências</li>
                                 </ol>
                             </nav>
                         </div>
@@ -191,37 +193,37 @@ $coordenadores = listar_coordenadores($pdo);
                 <div class="pd-20 card-box mb-30">
                     <div class="clearfix">
                         <div class="pull-left">
-                            <h4 class="text-blue h4">Alunos</h4>
+                            <h4 class="text-blue h4">Professores</h4>
                             <p>Selecione para ir ao perfil do usuário.</p>
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table id="alunosTable" class="table hover">
-                            <thead>
+                        <table id="professoresTable" class="table hover">
+                        <thead>
                                 <tr>
                                     <th>MA</th>
-                                    <?php if ($cod_categoria == 3): ?>
-                                        <th>UID</th>
-                                    <?php endif; ?>
                                     <th>Nome</th>
-                                    <th>Curso</th>
-                                    <?php if ($cod_categoria == 3): ?>
-                                        <th>Data Matrícula</th>
-                                    <?php endif; ?>
+                                    <th>Dia Útil</th>
+                                    <th>Data</th>
+                                    <th>Horário</th>
+                                    <th>Ocorrência</th>
+                                    <th>Disciplina</th>
+                                    <th>ID Grade Horária</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($alunos as $aluno): ?>
-                                    <tr class="linha-dados linha-aluno" data-ma="<?php echo htmlspecialchars($aluno['ma_aluno']); ?>">
-                                        <td><?php echo htmlspecialchars($aluno['ma_aluno']); ?></td>
-                                        <?php if ($cod_categoria == 3): ?>
-                                            <td><?php echo htmlspecialchars($aluno['uid_rfid']); ?></td>
-                                        <?php endif; ?>
-                                        <td><?php echo htmlspecialchars($aluno['nome']); ?></td>
-                                        <td><?php echo htmlspecialchars($aluno['curso']); ?></td>
-                                        <?php if ($cod_categoria == 3): ?>
-                                            <td><?php echo htmlspecialchars((new DateTime($aluno['data_registro']))->format('d/m/Y')); ?></td>
-                                        <?php endif; ?>
+                                <?php foreach ($ocorrencias_professores as $ocorrencias_professor): ?>
+                                    <tr class="linha-dados linha-professor" data-ma="<?php echo htmlspecialchars($ocorrencias_professor['ma_profissional']); ?>">
+                                        <td><?php echo htmlspecialchars($ocorrencias_professor['ma_profissional']); ?></td>
+                                        <td><?php echo htmlspecialchars($ocorrencias_professor['nome_profissional']); ?></td>
+                                        <td><?php echo htmlspecialchars($ocorrencias_professor['dia_semana']); ?></td>
+                                        <td><?php echo htmlspecialchars($ocorrencias_professor['data_ocorrencia']); ?></td>
+                                        <td><?php echo htmlspecialchars($ocorrencias_professor['hora_ocorrencia']); ?></td>
+                                        <td><?php echo htmlspecialchars($ocorrencias_professor['ocorrencia']); ?></td>
+                                        <td><?php echo htmlspecialchars($ocorrencias_professor['disciplina']); ?></td>
+                                        <td><?php echo htmlspecialchars($ocorrencias_professor['id_grade_horaria']); ?></td>
+                            
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -403,35 +405,35 @@ $coordenadores = listar_coordenadores($pdo);
                     extend: 'copy',
                     text: 'Copiar',
                     title: function() {
-                        return 'Lista de Professores'; // Título personalizado para a tabela de Professores
+                        return 'Histórico de Ocorrências dos Professores'; // Título personalizado para a tabela de Professores
                     }
                 },
                 {
                     extend: 'csv',
                     text: 'CSV',
                     title: function() {
-                        return 'Lista de Professores'; // Título personalizado para a tabela de Professores
+                        return 'Histórico de Ocorrências dos Professores'; // Título personalizado para a tabela de Professores
                     }
                 },
                 {
                     extend: 'excel',
                     text: 'Excel',
                     title: function() {
-                        return 'Lista de Professores'; // Título personalizado para a tabela de Professores
+                        return 'Histórico de Ocorrências dos Professores'; // Título personalizado para a tabela de Professores
                     }
                 },
                 {
                     extend: 'pdf',
                     text: 'PDF',
                     title: function() {
-                        return 'Lista de Professores'; // Título personalizado para a tabela de Professores
+                        return 'Histórico de Ocorrências dos Professores'; // Título personalizado para a tabela de Professores
                     }
                 },
                 {
                     extend: 'print',
                     text: 'Imprimir',
                     title: function() {
-                        return 'Lista de Professores'; // Título personalizado para a tabela de Professores
+                        return 'Histórico de Ocorrências dos Professores'; // Título personalizado para a tabela de Professores
                     }
                 }
             ]
