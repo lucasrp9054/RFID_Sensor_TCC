@@ -33,7 +33,7 @@ $coordenadores = listar_coordenadores($pdo);
 <head>
     <!-- Basic Page Info -->
     <meta charset="utf-8">
-    <title>Lista</title>
+    <title>Ocorrências</title>
     
     <link rel="apple-touch-icon" sizes="180x180" href="vendors/images/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="vendors/images/favicon-32x32.png">

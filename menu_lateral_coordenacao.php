@@ -25,8 +25,18 @@
 					</li>
 					<li>
 						<a href="cadastrar_novo_usuario.php" class="dropdown-toggle no-arrow">
-							<span class="micon dw dw-book"></span><span class="mtext"> Cadastros</span>
+							<span class="micon dw dw-book"></span><span class="mtext"> Cadastrar</span>
 						</a>
+					</li>
+					<li class="dropdown">
+						<a href="javascript:;" class="dropdown-toggle">
+							<span class="micon fa fa-list"></span><span class="mtext"> Listas</span>
+						</a>
+						<ul class="submenu">
+							<li><a href="listar_usuarios.php"> Usuários </a></li>
+							<li><a href="listar_registros_presenca.php"> Entrada e Saída </a></li>
+							<li><a href="listar_ocorrencias.php">Ocorrências</a></li>
+						</ul>
 					</li>
 					<li>
 						<a href="listar_usuarios.php" class="dropdown-toggle no-arrow">
