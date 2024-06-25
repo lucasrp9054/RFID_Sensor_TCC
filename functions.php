@@ -208,8 +208,9 @@ function gerar_novo_ma($pdo) {
 
 // Função para lidar com registros de profissionais na tabela de presença
 // Função para lidar com registros de profissionais na tabela de presença
-function entrada_saida_profissionais ($ma, $pdo){//Funcionando
+function entrada_saida_profissionais($ma, $pdo) {
     echo "Processando registro de profissional para MA: $ma\n";
+    
     // Verifica se já existe um registro para o MA na tabela de registros de profissionais
     $stmt_registro = $pdo->prepare("SELECT * FROM tb_registro_presenca_profissionais WHERE ma = ? ORDER BY data_hora_entrada DESC LIMIT 1");
     $stmt_registro->execute([$ma]);
@@ -220,20 +221,22 @@ function entrada_saida_profissionais ($ma, $pdo){//Funcionando
         $sql_update = "UPDATE tb_registro_presenca_profissionais SET data_hora_saida = NOW() WHERE ma = ? AND id_registro_profissional = ?";
         $stmt_update = $pdo->prepare($sql_update);
         $stmt_update->execute([$ma, $registro['id_registro_profissional']]);
-        echo "Horário de saída atualizado para o registro de presença do profissional.\n";
+        echo "Horário de saída de profissional atualizado para data_hora_saida: " . date('Y-m-d H:i:s') . "\n";
     } else {
         // Cria um novo registro de entrada
         $sql_insert = "INSERT INTO tb_registro_presenca_profissionais (ma, data_hora_entrada) VALUES (?, NOW())";
         $stmt_insert = $pdo->prepare($sql_insert);
         $stmt_insert->execute([$ma]);
-        echo "Novo registro de presença criado para profissional.\n";
+        echo "Nova entrada de profissional registrada data_hora_entrada: " . date('Y-m-d H:i:s') . "\n";
     }
 }
 
 
+
 // Função para lidar com registros de alunos na tabela de presença
-function entrada_saida_alunos($ma_aluno, $pdo) {//Funcionando
+function entrada_saida_alunos($ma_aluno, $pdo) {
     echo "Processando registro de aluno para MA: $ma_aluno\n";
+    
     // Verifica se já existe um registro para o MA na tabela de registros de alunos
     $stmt_registro = $pdo->prepare("SELECT * FROM tb_registro_presenca_alunos WHERE ma_aluno = ? ORDER BY data_hora_entrada DESC LIMIT 1");
     $stmt_registro->execute([$ma_aluno]);
@@ -244,15 +247,16 @@ function entrada_saida_alunos($ma_aluno, $pdo) {//Funcionando
         $sql_update = "UPDATE tb_registro_presenca_alunos SET data_hora_saida = NOW() WHERE ma_aluno = ? AND id_registro_aluno = ?";
         $stmt_update = $pdo->prepare($sql_update);
         $stmt_update->execute([$ma_aluno, $registro['id_registro_aluno']]);
-        echo "Horário de saída atualizado para o registro de presença do aluno.\n";
+        echo "Horário de saída de aluno atualizado para data_hora_saida: " . date('Y-m-d H:i:s') . "\n";
     } else {
         // Cria um novo registro de entrada
         $sql_insert = "INSERT INTO tb_registro_presenca_alunos (ma_aluno, data_hora_entrada) VALUES (?, NOW())";
         $stmt_insert = $pdo->prepare($sql_insert);
         $stmt_insert->execute([$ma_aluno]);
-        echo "Novo registro de presença criado para aluno.\n";
+        echo "Nova entrada de aluno registrada data_hora_entrada: " . date('Y-m-d H:i:s') . "\n";
     }
 }
+
 
 
 // Função para verificar se é o primeiro acesso do profissional/aluno e redirecionar conforme necessário
@@ -978,6 +982,63 @@ function listar_coordenadores($pdo){
     $coordenadores = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     return $coordenadores;
+}
+
+function listar_registros($tipo ,$pdo){
+    
+    if($tipo == 1)
+    {
+        $stmt = $pdo->query("SELECT r.ma_aluno, a.nome, cds.dia_semana, r.data_hora_entrada, r.data_hora_saida
+                            FROM tb_registro_presenca_alunos r
+                            JOIN tb_alunos a ON r.ma_aluno = a.ma_aluno
+                            JOIN tb_cod_dia_semana cds ON cds.cod_dia_semana = DAYOFWEEK(r.data_hora_entrada);
+                            ");
+        $registros_alunos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($registros_alunos as &$registro) {
+            $dataHoraEntrada = new DateTime($registro['data_hora_entrada']);
+            $registro['data'] = $dataHoraEntrada->format('d/m/Y');
+            $registro['hora_entrada'] = $dataHoraEntrada->format('H:i:s');
+    
+            if ($registro['data_hora_saida']) {
+                $dataHoraSaida = new DateTime($registro['data_hora_saida']);
+                $registro['hora_saida'] = $dataHoraSaida->format('H:i:s');
+            } else {
+                $registro['hora_saida'] = 'N/A';
+                $registro['duracao'] = 'N/A';
+                    }
+        }
+
+        return $registros_alunos;
+    }
+    else
+    {
+        $stmt = $pdo->query("SELECT r.ma, a.nome, cds.dia_semana, r.data_hora_entrada, r.data_hora_saida
+                            FROM tb_registro_presenca_profissionais r
+                            JOIN tb_profissionais a ON r.ma = a.ma
+                            JOIN tb_cod_dia_semana cds ON cds.cod_dia_semana = DAYOFWEEK(r.data_hora_entrada);
+                            ");
+        $registros_professores = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($registros_professores as &$registro) {
+            $dataHoraEntrada = new DateTime($registro['data_hora_entrada']);
+            $registro['data'] = $dataHoraEntrada->format('d/m/Y');
+            $registro['hora_entrada'] = $dataHoraEntrada->format('H:i:s');
+    
+            if ($registro['data_hora_saida']) {
+                $dataHoraSaida = new DateTime($registro['data_hora_saida']);
+                $registro['hora_saida'] = $dataHoraSaida->format('H:i:s');
+            } else {
+                $registro['hora_saida'] = 'N/A';
+                $registro['duracao'] = 'N/A';
+                    }
+        }
+
+        return $registros_professores;
+
+    }
+    
+    
 }
 
 

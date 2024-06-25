@@ -22,9 +22,8 @@ $nome = $usuario['nome'];
 $cod_categoria = $usuario['cod_categoria'];
 $caminho_imagem = obter_caminho_imagem($ma_user, $cod_categoria, $pdo);
 
-$alunos = listar_alunos($pdo);
-$professores = listar_professores($pdo);
-$coordenadores = listar_coordenadores($pdo);
+$registros_alunos = listar_registros('1' ,$pdo);
+$registros_professores = listar_registros('2' ,$pdo);
 ?>
 
 <!DOCTYPE html>
@@ -191,7 +190,7 @@ $coordenadores = listar_coordenadores($pdo);
                 <div class="pd-20 card-box mb-30">
                     <div class="clearfix">
                         <div class="pull-left">
-                            <h4 class="text-blue h4">Alunos</h4>
+                            <h4 class="text-blue h4">Alunos Entrada e Saída</h4>
                             <p>Selecione para ir ao perfil do usuário.</p>
                         </div>
                     </div>
@@ -200,28 +199,23 @@ $coordenadores = listar_coordenadores($pdo);
                             <thead>
                                 <tr>
                                     <th>MA</th>
-                                    <?php if ($cod_categoria == 3): ?>
-                                        <th>UID</th>
-                                    <?php endif; ?>
                                     <th>Nome</th>
-                                    <th>Curso</th>
-                                    <?php if ($cod_categoria == 3): ?>
-                                        <th>Data Matrícula</th>
-                                    <?php endif; ?>
+                                    <th>Dia da Semana</th>
+                                    <th>Data</th>
+                                    <th>Hora Entrada</th>
+                                    <th>Data/Hora Saída</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($alunos as $aluno): ?>
-                                    <tr class="linha-dados linha-aluno" data-ma="<?php echo htmlspecialchars($aluno['ma_aluno']); ?>">
-                                        <td><?php echo htmlspecialchars($aluno['ma_aluno']); ?></td>
-                                        <?php if ($cod_categoria == 3): ?>
-                                            <td><?php echo htmlspecialchars($aluno['uid_rfid']); ?></td>
-                                        <?php endif; ?>
-                                        <td><?php echo htmlspecialchars($aluno['nome']); ?></td>
-                                        <td><?php echo htmlspecialchars($aluno['curso']); ?></td>
-                                        <?php if ($cod_categoria == 3): ?>
-                                            <td><?php echo htmlspecialchars((new DateTime($aluno['data_registro']))->format('d/m/Y')); ?></td>
-                                        <?php endif; ?>
+                                <?php foreach ($registros_alunos as $registros_aluno): ?>
+                                    <tr class="linha-dados linha-aluno" data-ma="<?php echo htmlspecialchars($registros_aluno['ma_aluno']); ?>">
+                                        <td><?php echo htmlspecialchars($registros_aluno['ma_aluno']); ?></td>
+                                        <td><?php echo htmlspecialchars($registros_aluno['nome']); ?></td>
+                                        <td><?php echo htmlspecialchars($registros_aluno['dia_semana']); ?></td>
+                                        <td><?php echo htmlspecialchars($registros_aluno['data']); ?></td>
+                                        <td><?php echo htmlspecialchars($registros_aluno['hora_entrada']); ?></td>
+                                        <td><?php echo htmlspecialchars($registros_aluno['hora_saida']); ?></td>
+                            
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -233,83 +227,38 @@ $coordenadores = listar_coordenadores($pdo);
                 <div class="pd-20 card-box mb-30">
                     <div class="clearfix">
                         <div class="pull-left">
-                            <h4 class="text-blue h4">Professores</h4>
+                            <h4 class="text-blue h4"> Professores Entrada e Saída </h4>
                             <p>Selecione para ir ao perfil do usuário.</p>
                         </div>
                     </div>
                     <div class="table-responsive">
                         <table id="professoresTable" class="table hover">
-                            <thead>
+                        <thead>
                                 <tr>
                                     <th>MA</th>
-                                    <?php if ($cod_categoria == 3): ?>
-                                        <th>UID</th>
-                                    <?php endif; ?>
                                     <th>Nome</th>
-                                    <?php if ($cod_categoria == 3): ?>
-                                        <th>Data Registro</th>
-                                    <?php endif; ?>
+                                    <th>Dia da Semana</th>
+                                    <th>Data</th>
+                                    <th>Hora Entrada</th>
+                                    <th>Data/Hora Saída</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($professores as $professor): ?>
-                                    <tr class="linha-dados linha-professor" data-ma="<?php echo htmlspecialchars($professor['ma']); ?>">
-                                        <td><?php echo htmlspecialchars($professor['ma']); ?></td>
-                                        <?php if ($cod_categoria == 3): ?>
-                                            <td><?php echo htmlspecialchars($professor['uid_rfid']); ?></td>
-                                        <?php endif; ?>
-                                        <td><?php echo htmlspecialchars($professor['nome']); ?></td>
-                                        <?php if ($cod_categoria == 3): ?>
-                                            <td><?php echo htmlspecialchars((new DateTime($professor['data_registro']))->format('d/m/Y')); ?></td>
-                                        <?php endif; ?>
+                                <?php foreach ($registros_professores as $registros_professor): ?>
+                                    <tr class="linha-dados linha-aluno" data-ma="<?php echo htmlspecialchars($registros_professor['ma']); ?>">
+                                        <td><?php echo htmlspecialchars($registros_professor['ma']); ?></td>
+                                        <td><?php echo htmlspecialchars($registros_professor['nome']); ?></td>
+                                        <td><?php echo htmlspecialchars($registros_professor['dia_semana']); ?></td>
+                                        <td><?php echo htmlspecialchars($registros_professor['data']); ?></td>
+                                        <td><?php echo htmlspecialchars($registros_professor['hora_entrada']); ?></td>
+                                        <td><?php echo htmlspecialchars($registros_professor['hora_saida']); ?></td>
+                            
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
                 </div>
-
-                <!-- Tabela de Coordenadores -->
-                <div class="pd-20 card-box mb-30">
-                    <div class="clearfix">
-                        <div class="pull-left">
-                            <h4 class="text-blue h4">Coordenadores</h4>
-                            <p>Selecione para ir ao perfil do usuário.</p>
-                        </div>
-                    </div>
-                    <div class="table-responsive">
-                        <table id="coordenadoresTable" class="table hover">
-                            <thead>
-                                <tr>
-                                    <th>MA</th>
-                                    <?php if ($cod_categoria == 3): ?>
-                                        <th>UID</th>
-                                    <?php endif; ?>
-                                    <th>Nome</th>
-                                    <?php if ($cod_categoria == 3): ?>
-                                        <th>Data Registro</th>
-                                    <?php endif; ?>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($coordenadores as $coordenador): ?>
-                                    <tr class="linha-dados linha-coordenador" data-ma="<?php echo htmlspecialchars($coordenador['ma']); ?>">
-                                        <td><?php echo htmlspecialchars($coordenador['ma']); ?></td>
-                                        <?php if ($cod_categoria == 3): ?>
-                                            <td><?php echo htmlspecialchars($coordenador['uid_rfid']); ?></td>
-                                        <?php endif; ?>
-                                        <td><?php echo htmlspecialchars($coordenador['nome']); ?></td>
-                                        <?php if ($cod_categoria == 3): ?>
-                                            <td><?php echo htmlspecialchars((new DateTime($coordenador['data_registro']))->format('d/m/Y')); ?></td>
-                                        <?php endif; ?>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Rodapé -->
                 <div class="footer-wrap pd-20 mb-20 card-box">
                     Engenharia da Computação - Lucas Ribeiro e Líbano Abboud
                 </div>
