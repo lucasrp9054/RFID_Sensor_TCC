@@ -38,11 +38,7 @@
 							<li><a href="listar_ocorrencias.php">Ocorrências</a></li>
 						</ul>
 					</li>
-					<li>
-						<a href="listar_usuarios.php" class="dropdown-toggle no-arrow">
-							<span class="micon fa fa-list"></span><span class="mtext"> Listas</span>
-						</a>
-					</li>
+
 					
 
 <!-- Divisão da Barra de navegação -->
