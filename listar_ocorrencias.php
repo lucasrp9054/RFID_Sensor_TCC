@@ -230,47 +230,6 @@ $ocorrencias_professores = listar_ocorrencias('2', $pdo);
                         </table>
                     </div>
                 </div>
-
-                <!-- Tabela de Professores -->
-                <div class="pd-20 card-box mb-30">
-                    <div class="clearfix">
-                        <div class="pull-left">
-                            <h4 class="text-blue h4">Professores</h4>
-                            <p>Selecione para ir ao perfil do usuário.</p>
-                        </div>
-                    </div>
-                    <div class="table-responsive">
-                        <table id="professoresTable" class="table hover">
-                            <thead>
-                                <tr>
-                                    <th>MA</th>
-                                    <?php if ($cod_categoria == 3): ?>
-                                        <th>UID</th>
-                                    <?php endif; ?>
-                                    <th>Nome</th>
-                                    <?php if ($cod_categoria == 3): ?>
-                                        <th>Data Registro</th>
-                                    <?php endif; ?>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($professores as $professor): ?>
-                                    <tr class="linha-dados linha-professor" data-ma="<?php echo htmlspecialchars($professor['ma']); ?>">
-                                        <td><?php echo htmlspecialchars($professor['ma']); ?></td>
-                                        <?php if ($cod_categoria == 3): ?>
-                                            <td><?php echo htmlspecialchars($professor['uid_rfid']); ?></td>
-                                        <?php endif; ?>
-                                        <td><?php echo htmlspecialchars($professor['nome']); ?></td>
-                                        <?php if ($cod_categoria == 3): ?>
-                                            <td><?php echo htmlspecialchars((new DateTime($professor['data_registro']))->format('d/m/Y')); ?></td>
-                                        <?php endif; ?>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
                 <!-- Tabela de Coordenadores -->
                 <div class="pd-20 card-box mb-30">
                     <div class="clearfix">
