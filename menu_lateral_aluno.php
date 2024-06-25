@@ -25,7 +25,7 @@
 					</li>
 					<li>
 						<a href="listar_usuarios.php" class="dropdown-toggle no-arrow">
-							<span class="micon dw dw-book"></span><span class="mtext"> Listas</span>
+							<span class="micon fa fa-list"></span><span class="mtext"> Listas</span>
 						</a>
 					</li>
 
