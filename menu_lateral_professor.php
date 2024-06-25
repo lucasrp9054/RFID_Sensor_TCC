@@ -37,7 +37,7 @@
 						<div class="dropdown-divider"></div>
 					</li>
 					<li>
-						<div class="sidebar-small-cap">Extra</div>
+						<div class="sidebar-small-cap">Professor</div>
 					</li>
 				</ul>
 			</div>
