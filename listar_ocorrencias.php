@@ -25,7 +25,7 @@ $caminho_imagem = obter_caminho_imagem($ma_user, $cod_categoria, $pdo);
 $alunos = listar_alunos($pdo);
 $professores = listar_professores($pdo);
 $coordenadores = listar_coordenadores($pdo);
-
+$ocorrencias_alunos = listar_ocorrencias('1', $pdo);
 $ocorrencias_professores = listar_ocorrencias('2', $pdo);
 ?>
 
@@ -188,8 +188,49 @@ $ocorrencias_professores = listar_ocorrencias('2', $pdo);
                         </div>
                     </div>
                 </div>
-                
                 <!-- Tabela de Alunos -->
+                <div class="pd-20 card-box mb-30">
+                    <div class="clearfix">
+                        <div class="pull-left">
+                            <h4 class="text-blue h4">Alunos</h4>
+                            <p>Selecione para ir ao perfil do usuário.</p>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="alunosTable" class="table hover">
+                        <thead>
+                                <tr>
+                                    <th>MA</th>
+                                    <th>Nome</th>
+                                    <th>Dia Útil</th>
+                                    <th>Data</th>
+                                    <th>Horário</th>
+                                    <th>Ocorrência</th>
+                                    <th>Disciplina</th>
+                                    <th>ID Grade Horária</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($ocorrencias_alunos as $ocorrencias_aluno): ?>
+                                    <tr class="linha-dados linha-professor" data-ma="<?php echo htmlspecialchars($ocorrencias_professor['ma_aluno']); ?>">
+                                        <td><?php echo htmlspecialchars($ocorrencias_aluno['ma_aluno']); ?></td>
+                                        <td><?php echo htmlspecialchars($ocorrencias_aluno['nome_aluno']); ?></td>
+                                        <td><?php echo htmlspecialchars($ocorrencias_aluno['dia_semana']); ?></td>
+                                        <td><?php echo htmlspecialchars($ocorrencias_aluno['data_ocorrencia']); ?></td>
+                                        <td><?php echo htmlspecialchars($ocorrencias_aluno['hora_ocorrencia']); ?></td>
+                                        <td><?php echo htmlspecialchars($ocorrencias_aluno['ocorrencia']); ?></td>
+                                        <td><?php echo htmlspecialchars($ocorrencias_aluno['disciplina']); ?></td>
+                                        <td><?php echo htmlspecialchars($ocorrencias_aluno['id_grade_horaria']); ?></td>
+                            
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Tabela de Professores -->
                 <div class="pd-20 card-box mb-30">
                     <div class="clearfix">
                         <div class="pull-left">
@@ -230,46 +271,6 @@ $ocorrencias_professores = listar_ocorrencias('2', $pdo);
                         </table>
                     </div>
                 </div>
-                <!-- Tabela de Coordenadores -->
-                <div class="pd-20 card-box mb-30">
-                    <div class="clearfix">
-                        <div class="pull-left">
-                            <h4 class="text-blue h4">Coordenadores</h4>
-                            <p>Selecione para ir ao perfil do usuário.</p>
-                        </div>
-                    </div>
-                    <div class="table-responsive">
-                        <table id="coordenadoresTable" class="table hover">
-                            <thead>
-                                <tr>
-                                    <th>MA</th>
-                                    <?php if ($cod_categoria == 3): ?>
-                                        <th>UID</th>
-                                    <?php endif; ?>
-                                    <th>Nome</th>
-                                    <?php if ($cod_categoria == 3): ?>
-                                        <th>Data Registro</th>
-                                    <?php endif; ?>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($coordenadores as $coordenador): ?>
-                                    <tr class="linha-dados linha-coordenador" data-ma="<?php echo htmlspecialchars($coordenador['ma']); ?>">
-                                        <td><?php echo htmlspecialchars($coordenador['ma']); ?></td>
-                                        <?php if ($cod_categoria == 3): ?>
-                                            <td><?php echo htmlspecialchars($coordenador['uid_rfid']); ?></td>
-                                        <?php endif; ?>
-                                        <td><?php echo htmlspecialchars($coordenador['nome']); ?></td>
-                                        <?php if ($cod_categoria == 3): ?>
-                                            <td><?php echo htmlspecialchars((new DateTime($coordenador['data_registro']))->format('d/m/Y')); ?></td>
-                                        <?php endif; ?>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
                 <!-- Rodapé -->
                 <div class="footer-wrap pd-20 mb-20 card-box">
                     Engenharia da Computação - Lucas Ribeiro e Líbano Abboud
@@ -398,50 +399,6 @@ $ocorrencias_professores = listar_ocorrencias('2', $pdo);
             ]
         };
 
-        var coordenadoresTableOptions = {
-            ...defaultTableOptions,
-            dom: 'Bfrtip',
-            language: {
-                url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json" // Tradução para PT-BR
-            },
-            buttons: [
-                {
-                    extend: 'copy',
-                    text: 'Copiar',
-                    title: function() {
-                        return 'Lista de Coordenadores'; // Título personalizado para a tabela de Coordenadores
-                    }
-                },
-                {
-                    extend: 'csv',
-                    text: 'CSV',
-                    title: function() {
-                        return 'Lista de Coordenadores'; // Título personalizado para a tabela de Coordenadores
-                    }
-                },
-                {
-                    extend: 'excel',
-                    text: 'Excel',
-                    title: function() {
-                        return 'Lista de Coordenadores'; // Título personalizado para a tabela de Coordenadores
-                    }
-                },
-                {
-                    extend: 'pdf',
-                    text: 'PDF',
-                    title: function() {
-                        return 'Lista de Coordenadores'; // Título personalizado para a tabela de Coordenadores
-                    }
-                },
-                {
-                    extend: 'print',
-                    text: 'Imprimir',
-                    title: function() {
-                        return 'Lista de Coordenadores'; // Título personalizado para a tabela de Coordenadores
-                    }
-                }
-            ]
-        };
 
         // Inicializa os DataTables para cada tabela com as respectivas opções
         $(document).ready(function() {
@@ -453,12 +410,10 @@ $ocorrencias_professores = listar_ocorrencias('2', $pdo);
                 $('#professoresTable').DataTable(professoresTableOptions);
             }
 
-            if (!$.fn.dataTable.isDataTable('#coordenadoresTable')) {
-                $('#coordenadoresTable').DataTable(coordenadoresTableOptions);
-            }
+            
 
             // Captura o clique na linha das tabelas de alunos, professores e coordenadores
-            $('#alunosTable, #professoresTable, #coordenadoresTable').on('click', 'tr.linha-dados', function() {
+            $('#alunosTable, #professoresTable').on('click', 'tr.linha-dados', function() {
                 var maPerfil = $(this).data('ma'); // Obtém o MA do perfil da linha clicada
                 window.location.href = 'visitar_perfil.php?ma_perfil=' + encodeURIComponent(maPerfil); // Redireciona para o perfil
             });

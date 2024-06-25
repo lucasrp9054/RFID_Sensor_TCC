@@ -977,6 +977,7 @@ function listar_professores($pdo){
 
 
 function listar_coordenadores($pdo){
+
     $stmt = $pdo->query("SELECT ma, uid_rfid, nome, data_registro FROM tb_profissionais WHERE cod_categoria = 3
     ");
     $coordenadores = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -1043,28 +1044,31 @@ function listar_ocorrencias($tipo ,$pdo){
     
     if($tipo == 1)
     {
-        $stmt = $pdo->query("SELECT r.ma_aluno, a.nome, cds.dia_semana, r.data_hora_entrada, r.data_hora_saida
-                            FROM tb_registro_presenca_alunos r
-                            JOIN tb_alunos a ON r.ma_aluno = a.ma_aluno
-                            JOIN tb_cod_dia_semana cds ON cds.cod_dia_semana = DAYOFWEEK(r.data_hora_entrada);
-                            ");
-        $registros_alunos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $pdo->query("SELECT oa.ma_aluno,
+                                    a.nome AS nome_aluno,
+                                    cds.dia_semana,
+                                    oa.data_hora_ocorrencia,
+                                    tpo.ocorrencia,
+                                    oa.id_grade_horaria,
+                                    d.nome AS disciplina
 
-        foreach ($registros_alunos as &$registro) {
-            $dataHoraEntrada = new DateTime($registro['data_hora_entrada']);
-            $registro['data'] = $dataHoraEntrada->format('d/m/Y');
-            $registro['hora_entrada'] = $dataHoraEntrada->format('H:i:s');
-    
-            if ($registro['data_hora_saida']) {
-                $dataHoraSaida = new DateTime($registro['data_hora_saida']);
-                $registro['hora_saida'] = $dataHoraSaida->format('H:i:s');
-            } else {
-                $registro['hora_saida'] = 'N/A';
-                $registro['duracao'] = 'N/A';
-                    }
+                            FROM tb_ocorrencias_alunos oa
+                            JOIN tb_alunos a ON a.ma_aluno = oa.ma_aluno
+                            JOIN tb_tipo_ocorrencia tpo ON tpo.id_tipo_ocorrencia = oa.id_tipo_ocorrencia
+                            JOIN tb_grade_horaria gd ON gd.id_grade_horaria = oa.id_grade_horaria
+                            JOIN tb_disciplinas d ON d.id_disciplina = gd.id_disciplina
+                            JOIN tb_cod_dia_semana cds ON cds.cod_dia_semana = DAYOFWEEK(oa.data_hora_ocorrencia);
+                            ");
+
+        $ocorrencias_alunos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($ocorrencias_alunos as &$registro) {
+            $dataHoraOcorrencia = new DateTime($registro['data_hora_ocorrencia']);
+            $registro['data_ocorrencia'] = $dataHoraOcorrencia->format('d/m/Y');
+            $registro['hora_ocorrencia'] = $dataHoraOcorrencia->format('H:i:s');
         }
 
-        return 0;
+        return $ocorrencias_alunos;
     }
     else
     {
