@@ -19,11 +19,6 @@
 						</a>
 					</li>
 					<li>
-						<a href="grade_horaria.php" class="dropdown-toggle no-arrow">
-							<span class="micon dw dw-calendar1"></span><span class="mtext"> Grade Horária</span>
-						</a>
-					</li>
-					<li>
 						<a href="listar_usuarios.php" class="dropdown-toggle no-arrow">
 							<span class="micon fa fa-users"></span><span class="mtext"> Usuários</span>
 						</a>

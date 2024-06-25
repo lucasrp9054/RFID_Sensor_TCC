@@ -823,6 +823,8 @@ function obter_disciplinas($ma, $tipo, $pdo){
     // Retorna o array de disciplinas
     return $disciplinas;
 }
+
+
 function contar_dados_index($ma, $tipo, $op, $pdo){
     if($tipo == 1) {
         // Operações para alunos
@@ -1102,3 +1104,57 @@ function listar_ocorrencias($tipo ,$pdo){
 }
 
 
+function obter_grade_horaria($ma, $categoria, $pdo) {
+    if ($categoria == 1) {
+        $stmt = $pdo->prepare("
+            SELECT gh.id_grade_horaria,
+                   d.nome AS disciplina,
+                   cds.dia_semana,
+                   gh.hora_inicio,
+                   gh.hora_fim,
+                   gh.sala
+            FROM tb_grade_horaria gh
+            JOIN tb_alunos_aulas aa ON aa.id_grade_horaria = gh.id_grade_horaria AND aa.ma_aluno = :ma
+            JOIN tb_disciplinas d ON d.id_disciplina = gh.id_disciplina
+            JOIN tb_cod_dia_semana cds ON cds.cod_dia_semana = gh.cod_dia_semana
+            ORDER BY cds.dia_semana ASC
+        ");
+        
+        $stmt->execute([':ma' => $ma]);
+        
+        $agenda = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        foreach ($agenda as &$registro) {
+            // Formatando hora de início e fim, exemplo:
+            $registro['hora_inicio'] = date('H:i', strtotime($registro['hora_inicio']));
+            $registro['hora_fim'] = date('H:i', strtotime($registro['hora_fim']));
+        }
+        
+        return $agenda;
+    } else {
+        $stmt = $pdo->prepare("
+            SELECT gh.id_grade_horaria,
+                   d.nome AS disciplina,
+                   cds.dia_semana,
+                   gh.hora_inicio,
+                   gh.hora_fim,
+                   gh.sala
+            FROM tb_grade_horaria gh
+            JOIN tb_profissionais_aulas pa ON pa.id_grade_horaria = gh.id_grade_horaria AND pa.ma_prof = :ma
+            JOIN tb_disciplinas d ON d.id_disciplina = gh.id_disciplina
+            JOIN tb_cod_dia_semana cds ON cds.cod_dia_semana = gh.cod_dia_semana
+        ");
+        
+        $stmt->execute([':ma' => $ma]);
+        
+        $agenda = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        foreach ($agenda as &$registro) {
+            // Formatando hora de início e fim, exemplo:
+            $registro['hora_inicio'] = date('H:i', strtotime($registro['hora_inicio']));
+            $registro['hora_fim'] = date('H:i', strtotime($registro['hora_fim']));
+        }
+        
+        return $agenda;
+    }
+}

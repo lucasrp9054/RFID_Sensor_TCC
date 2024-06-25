@@ -19,11 +19,6 @@
 						</a>
 					</li>
 					<li>
-						<a href="grade_horaria.php" class="dropdown-toggle no-arrow">
-							<span class="micon dw dw-calendar1"></span><span class="mtext"> Grade Horária</span>
-						</a>
-					</li>
-					<li>
 						<a href="#" class="dropdown-toggle no-arrow">
 						<span class="micon"><i class="fas fa-users"></i></span><span class="mtext">Turmas</span>						</a>
 					</li>

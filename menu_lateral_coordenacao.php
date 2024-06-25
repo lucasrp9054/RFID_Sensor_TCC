@@ -19,11 +19,6 @@
 						</a>
 					</li>
 					<li>
-						<a href="grade_horaria.php" class="dropdown-toggle no-arrow">
-							<span class="micon dw dw-calendar1"></span><span class="mtext"> Grade Horária</span>
-						</a>
-					</li>
-					<li>
 						<a href="cadastrar_novo_usuario.php" class="dropdown-toggle no-arrow">
 							<span class="micon dw dw-book"></span><span class="mtext"> Cadastrar</span>
 						</a>

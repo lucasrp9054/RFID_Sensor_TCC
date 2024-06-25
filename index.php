@@ -23,6 +23,9 @@ $cod_categoria = $usuario['cod_categoria'];
 $caminho_imagem = obter_caminho_imagem($ma_user, $cod_categoria,$pdo);
 
 
+$horarios = obter_grade_horaria($ma_user, $cod_categoria, $pdo);
+
+
 //Preencher os boxes da index
 if($cod_categoria == 1)
 {
@@ -312,107 +315,39 @@ else
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-xl-8 mb-30">
-					<div class="card-box height-100-p pd-20">
-						<h2 class="h4 mb-20">Activity</h2>
-						<div id="chart5"></div>
-					</div>
-				</div>
-				<div class="col-xl-4 mb-30">
-					<div class="card-box height-100-p pd-20">
-
-
-						<h2 class="h4 mb-20">
-						<?php
-							// Condição para verificar a categoria do usuário
-							if ($usuario['cod_categoria'] == 1) {
-								echo "Média Geral";
-							} elseif ($usuario['cod_categoria'] == 2) {
-								echo "N°. Ocorrências";
-							} elseif ($usuario['cod_categoria'] == 3) {
-								echo "Coordenando:";
-							} else {
-								echo "Atuando em";
-							}
-						?>
-						</h2>
-						
-
-
-						
-						
-					</div>
-				</div>
-			</div>
-			<div class="card-box mb-30">
-				<h2 class="h4 pd-20">Professores da Área</h2>
-				<table id="example" class="data-table table nowrap">
-					<thead>
-						<tr>
-							<th class="table-plus datatable-nosort">Professor</th>
-							<th>Nome</th>
-							<th>MA</th>
-							<th>Área</th>
-							<th>Faltas no mês</th>
-							<th>Faltas no semestre</th>
-							<th class="datatable-nosort">Ação</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td class="table-plus">
-								<img src="vendors/images/product-1.jpg" width="70" height="70" alt="">
-							</td>
-							<td>
-								<h5 class="font-16">Blu</h5>
-								by John Doe
-							</td>
-							<td>White</td>
-							<td>B</td>
-							<td>$500</td>
-							<td>12</td>
-							<td>
-								<div class="dropdown">
-									<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-										<i class="fa-solid fa-angles-down"></i>
-									</a>
-									<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-										<a class="dropdown-item" href="#"><i class="dw dw-eye"></i> Visualizar</a>
-										<a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Alterar</a>
-										<a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Deletar</a>
-									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td class="table-plus">
-								<img src="vendors/images/product-2.jpg" width="70" height="70" alt="">
-							</td>
-							<td>
-								<h5 class="font-16">Shirt</h5>
-								by John Doe
-							</td>
-							<td>Black</td>
-							<td>M</td>
-							<td>$1000</td>
-							<td>1</td>
-							<td>
-								<div class="dropdown">
-									<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-										<i class="fa-solid fa-angles-down"></i>
-									</a>
-									<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-										<a class="dropdown-item" href="#"><i class="dw dw-eye"></i> Visualizar</a>
-										<a class="dropdown-item" href="#"><i class="dw dw-edit2"></i> Alterar</a>
-										<a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Deletar</a>
-									</div>
-								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+			<div class="pd-20 card-box mb-30">
+                    <div class="clearfix">
+                        <div class="pull-left">
+                            <h4 class="text-blue h4">Grade Horária</h4>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+								<tr>
+									<th>ID Grade Horária</th>
+                                    <th>Disciplina</th>
+                                    <th>Dia Útil</th>
+                                    <th>Inicia</th>
+                                    <th>Encerra</th>
+									<th>Sala</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($horarios as $horario): ?>
+                                    <tr class="linha-dados linha-professor" data-ma="<?php echo htmlspecialchars($ocorrencias_professor['ma_aluno']); ?>">
+										<td><?php echo htmlspecialchars($horario['id_grade_horaria']); ?></td>
+										<td><?php echo htmlspecialchars($horario['disciplina']); ?></td>                            
+										<td><?php echo htmlspecialchars($horario['dia_semana']); ?></td>
+                                        <td><?php echo htmlspecialchars($horario['hora_inicio']); ?></td>
+                                        <td><?php echo htmlspecialchars($horario['hora_fim']); ?></td>
+                                        <td><?php echo htmlspecialchars($horario['sala']); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 			<div class="footer-wrap pd-20 mb-20 card-box">
 				Engenharia da Computação - Lucas Ribeiro e Líbano Abboud
 			</div>
@@ -429,6 +364,9 @@ else
 	<script src="src/plugins/datatables/js/dataTables.responsive.min.js"></script>
 	<script src="src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
 	<script src="vendors/scripts/dashboard.js"></script>
+
+	
+
 </body>
 </html>
 
