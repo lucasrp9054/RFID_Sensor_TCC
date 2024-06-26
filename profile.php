@@ -272,9 +272,6 @@ $disciplinas = obter_disciplinas($ma_user, $cod_categoria, $pdo);
 											<a class="nav-link active" data-toggle="tab" href="#timeline" role="tab">Ocorrências</a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link" data-toggle="tab" href="#tasks" role="tab">Tasks</a>
-										</li>
-										<li class="nav-item">
 											<a class="nav-link" data-toggle="tab" href="#setting" role="tab">Configurações</a>
 										</li>
 									</ul>
@@ -282,236 +279,44 @@ $disciplinas = obter_disciplinas($ma_user, $cod_categoria, $pdo);
 										<!-- Timeline Tab start -->
 										<div class="tab-pane fade show active" id="timeline" role="tabpanel">
 											<div class="pd-20">
-												<div class="profile-timeline">
-													<div class="timeline-month">
-														<h5>August, 2020</h5>
-													</div>
-													<div class="profile-timeline-list">
-														<ul>
-															<li>
-																<div class="date">12 Aug</div>
-																<div class="task-name"><i class="ion-android-alarm-clock"></i> Task Added</div>
-																<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-																<div class="task-time">09:30 am</div>
-															</li>
-															<li>
-																<div class="date">10 Aug</div>
-																<div class="task-name"><i class="ion-ios-chatboxes"></i> Task Added</div>
-																<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-																<div class="task-time">09:30 am</div>
-															</li>
-															<li>
-																<div class="date">10 Aug</div>
-																<div class="task-name"><i class="ion-ios-clock"></i> Event Added</div>
-																<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-																<div class="task-time">09:30 am</div>
-															</li>
-															<li>
-																<div class="date">10 Aug</div>
-																<div class="task-name"><i class="ion-ios-clock"></i> Event Added</div>
-																<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-																<div class="task-time">09:30 am</div>
-															</li>
-														</ul>
-													</div>
-													<div class="timeline-month">
-														<h5>July, 2020</h5>
-													</div>
-													<div class="profile-timeline-list">
-														<ul>
-															<li>
-																<div class="date">12 July</div>
-																<div class="task-name"><i class="ion-android-alarm-clock"></i> Task Added</div>
-																<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-																<div class="task-time">09:30 am</div>
-															</li>
-															<li>
-																<div class="date">10 July</div>
-																<div class="task-name"><i class="ion-ios-chatboxes"></i> Task Added</div>
-																<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-																<div class="task-time">09:30 am</div>
-															</li>
-														</ul>
-													</div>
-													<div class="timeline-month">
-														<h5>June, 2020</h5>
-													</div>
-													<div class="profile-timeline-list">
-														<ul>
-															<li>
-																<div class="date">12 June</div>
-																<div class="task-name"><i class="ion-android-alarm-clock"></i> Task Added</div>
-																<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-																<div class="task-time">09:30 am</div>
-															</li>
-															<li>
-																<div class="date">10 June</div>
-																<div class="task-name"><i class="ion-ios-chatboxes"></i> Task Added</div>
-																<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-																<div class="task-time">09:30 am</div>
-															</li>
-															<li>
-																<div class="date">10 June</div>
-																<div class="task-name"><i class="ion-ios-clock"></i> Event Added</div>
-																<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-																<div class="task-time">09:30 am</div>
-															</li>
-														</ul>
-													</div>
+											<div class="pd-20 card-box mb-30">
+												<div class="clearfix">
 												</div>
+												<div class="table-responsive">
+													<table id="professoresTable" class="table hover">
+													<thead>
+															<tr>
+																<th>ID Grade Horária</th>
+																<th>Disciplina</th>
+																<th>Dia Útil</th>
+																<th>Data</th>
+																<th>Horário</th>
+																<th>Ocorrência</th>
+																
+																
+																
+															</tr>
+														</thead>
+														<tbody>
+															<?php foreach ($ocorrencias_professores as $ocorrencias_professor): ?>
+																<tr class="linha-dados linha-professor">
+																	
+																	<td><?php echo htmlspecialchars($ocorrencias_professor['dia_semana']); ?></td>
+																	<td><?php echo htmlspecialchars($ocorrencias_professor['data_ocorrencia']); ?></td>
+																	<td><?php echo htmlspecialchars($ocorrencias_professor['hora_ocorrencia']); ?></td>
+																	<td><?php echo htmlspecialchars($ocorrencias_professor['ocorrencia']); ?></td>
+																	<td><?php echo htmlspecialchars($ocorrencias_professor['disciplina']); ?></td>
+																	<td><?php echo htmlspecialchars($ocorrencias_professor['id_grade_horaria']); ?></td>
+														
+																</tr>
+															<?php endforeach; ?>
+														</tbody>
+													</table>
+												</div>
+											</div>
 											</div>
 										</div>
 										<!-- Timeline Tab End -->
-										<!-- Tasks Tab start -->
-										<div class="tab-pane fade" id="tasks" role="tabpanel">
-											<div class="pd-20 profile-task-wrap">
-												<div class="container pd-0">
-													<!-- Open Task start -->
-													<div class="task-title row align-items-center">
-														<div class="col-md-8 col-sm-12">
-															<h5>Open Tasks (4 Left)</h5>
-														</div>
-														<div class="col-md-4 col-sm-12 text-right">
-															<a href="task-add" data-toggle="modal" data-target="#task-add" class="bg-light-blue btn text-blue weight-500"><i class="ion-plus-round"></i> Add</a>
-														</div>
-													</div>
-													<div class="profile-task-list pb-30">
-														<ul>
-															<li>
-																<div class="custom-control custom-checkbox mb-5">
-																	<input type="checkbox" class="custom-control-input" id="task-1">
-																	<label class="custom-control-label" for="task-1"></label>
-																</div>
-																<div class="task-type">Email</div>
-																Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id ea earum.
-																<div class="task-assign">Assigned to Ferdinand M. <div class="due-date">due date <span>22 February 2019</span></div></div>
-															</li>
-															
-														</ul>
-													</div>
-													<!-- Open Task End -->
-													<!-- Close Task start -->
-													<div class="task-title row align-items-center">
-														<div class="col-md-12 col-sm-12">
-															<h5>Closed Tasks</h5>
-														</div>
-													</div>
-													<div class="profile-task-list close-tasks">
-														<ul>
-															<li>
-																<div class="custom-control custom-checkbox mb-5">
-																	<input type="checkbox" class="custom-control-input" id="task-close-1" checked="" disabled="">
-																	<label class="custom-control-label" for="task-close-1"></label>
-																</div>
-																<div class="task-type">Email</div>
-																Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id ea earum.
-																<div class="task-assign">Assigned to Ferdinand M. <div class="due-date">due date <span>22 February 2018</span></div></div>
-															</li>
-														</ul>
-													</div>
-													<!-- Close Task start -->
-													<!-- add task popup start -->
-													<div class="modal fade customscroll" id="task-add" tabindex="-1" role="dialog">
-														<div class="modal-dialog modal-dialog-centered" role="document">
-															<div class="modal-content">
-																<div class="modal-header">
-																	<h5 class="modal-title" id="exampleModalLongTitle">Tasks Add</h5>
-																	<button type="button" class="close" data-dismiss="modal" aria-label="Close" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Close Modal">
-																		<span aria-hidden="true">&times;</span>
-																	</button>
-																</div>
-																<div class="modal-body pd-0">
-																	<div class="task-list-form">
-																		<ul>
-																			<li>
-																				<form>
-																					<div class="form-group row">
-																						<label class="col-md-4">Task Type</label>
-																						<div class="col-md-8">
-																							<input type="text" class="form-control">
-																						</div>
-																					</div>
-																					<div class="form-group row">
-																						<label class="col-md-4">Task Message</label>
-																						<div class="col-md-8">
-																							<textarea class="form-control"></textarea>
-																						</div>
-																					</div>
-																					<div class="form-group row">
-																						<label class="col-md-4">Assigned to</label>
-																						<div class="col-md-8">
-																							<select class="selectpicker form-control" data-style="btn-outline-primary" title="Not Chosen" multiple="" data-selected-text-format="count" data-count-selected-text= "{0} people selected">
-																								<option>Ferdinand M.</option>
-																								<option>Don H. Rabon</option>
-																								<option>Ann P. Harris</option>
-																								<option>Katie D. Verdin</option>
-																								<option>Christopher S. Fulghum</option>
-																								<option>Matthew C. Porter</option>
-																							</select>
-																						</div>
-																					</div>
-																					<div class="form-group row mb-0">
-																						<label class="col-md-4">Due Date</label>
-																						<div class="col-md-8">
-																							<input type="text" class="form-control date-picker">
-																						</div>
-																					</div>
-																				</form>
-																			</li>
-																			<li>
-																				<a href="javascript:;" class="remove-task"  data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Remove Task"><i class="ion-minus-circled"></i></a>
-																				<form>
-																					<div class="form-group row">
-																						<label class="col-md-4">Task Type</label>
-																						<div class="col-md-8">
-																							<input type="text" class="form-control">
-																						</div>
-																					</div>
-																					<div class="form-group row">
-																						<label class="col-md-4">Task Message</label>
-																						<div class="col-md-8">
-																							<textarea class="form-control"></textarea>
-																						</div>
-																					</div>
-																					<div class="form-group row">
-																						<label class="col-md-4">Assigned to</label>
-																						<div class="col-md-8">
-																							<select class="selectpicker form-control" data-style="btn-outline-primary" title="Not Chosen" multiple="" data-selected-text-format="count" data-count-selected-text= "{0} people selected">
-																								<option>Ferdinand M.</option>
-																								<option>Don H. Rabon</option>
-																								<option>Ann P. Harris</option>
-																								<option>Katie D. Verdin</option>
-																								<option>Christopher S. Fulghum</option>
-																								<option>Matthew C. Porter</option>
-																							</select>
-																						</div>
-																					</div>
-																					<div class="form-group row mb-0">
-																						<label class="col-md-4">Due Date</label>
-																						<div class="col-md-8">
-																							<input type="text" class="form-control date-picker">
-																						</div>
-																					</div>
-																				</form>
-																			</li>
-																		</ul>
-																	</div>
-																	<div class="add-more-task">
-																		<a href="#" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Task"><i class="ion-plus-circled"></i> Add More Task</a>
-																	</div>
-																</div>
-																<div class="modal-footer">
-																	<button type="button" class="btn btn-primary">Add</button>
-																	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-																</div>
-															</div>
-														</div>
-													</div>
-													<!-- add task popup End -->
-												</div>
-											</div>
-										</div>
-										<!-- Tasks Tab End -->
 										<!-- Setting Tab start -->
 										<div class="tab-pane fade height-100-p" id="setting" role="tabpanel">
 											<div class="profile-setting">
@@ -567,17 +372,144 @@ $disciplinas = obter_disciplinas($ma_user, $cod_categoria, $pdo);
 			</div>
 		</div>
 	</div>
-	<!-- js -->
-	<script src="vendors/scripts/core.js"></script>
-	<script src="vendors/scripts/script.min.js"></script>
-	<script src="vendors/scripts/process.js"></script>
-	<script src="vendors/scripts/layout-settings.js"></script>
-	<script src="src/plugins/cropperjs/dist/cropper.js"></script>
-	<script>
+	 <!-- JavaScripts -->
+	 <script src="vendors/scripts/core.js"></script>
+    <script src="vendors/scripts/script.min.js"></script>
+    <script src="vendors/scripts/process.js"></script>
+    <script src="vendors/scripts/layout-settings.js"></script>
+    <script src="src/plugins/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="src/plugins/datatables/js/dataTables.responsive.min.js"></script>
+    <script src="src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
+    <!-- DataTables Export Buttons -->
+    <script src="src/plugins/datatables/js/dataTables.buttons.min.js"></script>
+    <script src="src/plugins/datatables/js/buttons.bootstrap4.min.js"></script>
+    <script src="src/plugins/datatables/js/buttons.print.min.js"></script>
+    <script src="src/plugins/datatables/js/buttons.html5.min.js"></script>
+    <script src="src/plugins/datatables/js/buttons.flash.min.js"></script>
+    <script src="src/plugins/datatables/js/pdfmake.min.js"></script>
+    <script src="src/plugins/datatables/js/vfs_fonts.js"></script>
+    <!-- Configurações do DataTables -->
+
+    <script src="vendors/scripts/datatable-setting.js"></script>
     document.getElementById('telefone').addEventListener('input', function (e) {
       var x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
       e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
     });
   </script>
+
+
+
+  <script>
+    $(document).ready(function() {
+        // Opções padrão para DataTables
+        var defaultTableOptions = {
+            "order": [], // Ordenação inicial em nenhuma coluna
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json" // Tradução para PT-BR
+            }
+        };
+
+        var alunosTableOptions = {
+            ...defaultTableOptions,
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'copy',
+                    text: 'Copiar',
+                    title: function() {
+                        return 'Lista de Alunos'; // Título personalizado para a tabela de Alunos
+                    }
+                },
+                {
+                    extend: 'csv',
+                    text: 'CSV',
+                    title: function() {
+                        return 'Lista de Alunos'; // Título personalizado para a tabela de Alunos
+                    }
+                },
+                {
+                    extend: 'excel',
+                    text: 'Excel',
+                    title: function() {
+                        return 'Lista de Alunos'; // Título personalizado para a tabela de Alunos
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    text: 'PDF',
+                    title: function() {
+                        return 'Lista de Alunos'; // Título personalizado para a tabela de Alunos
+                    }
+                },
+                {
+                    extend: 'print',
+                    text: 'Imprimir',
+                    title: function() {
+                        return 'Lista de Alunos'; // Título personalizado para a tabela de Alunos
+                    }
+                }
+            ]
+        };
+
+        var professoresTableOptions = {
+            ...defaultTableOptions,
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'copy',
+                    text: 'Copiar',
+                    title: function() {
+                        return 'Histórico de Ocorrências dos Professores'; // Título personalizado para a tabela de Professores
+                    }
+                },
+                {
+                    extend: 'csv',
+                    text: 'CSV',
+                    title: function() {
+                        return 'Histórico de Ocorrências dos Professores'; // Título personalizado para a tabela de Professores
+                    }
+                },
+                {
+                    extend: 'excel',
+                    text: 'Excel',
+                    title: function() {
+                        return 'Histórico de Ocorrências dos Professores'; // Título personalizado para a tabela de Professores
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    text: 'PDF',
+                    title: function() {
+                        return 'Histórico de Ocorrências dos Professores'; // Título personalizado para a tabela de Professores
+                    }
+                },
+                {
+                    extend: 'print',
+                    text: 'Imprimir',
+                    title: function() {
+                        return 'Histórico de Ocorrências dos Professores'; // Título personalizado para a tabela de Professores
+                    }
+                }
+            ]
+        };
+
+        // Inicializa os DataTables para cada tabela com as respectivas opções
+        if (!$.fn.dataTable.isDataTable('#alunosTable')) {
+            $('#alunosTable').DataTable(alunosTableOptions);
+        }
+
+        if (!$.fn.dataTable.isDataTable('#professoresTable')) {
+            $('#professoresTable').DataTable(professoresTableOptions);
+        }
+
+        // Captura o clique na linha das tabelas de alunos e professores
+        $('#alunosTable, #professoresTable').on('click', 'tr.linha-dados', function() {
+            var maPerfil = $(this).data('ma'); // Obtém o MA do perfil da linha clicada
+            window.location.href = 'visitar_perfil.php?ma_perfil=' + encodeURIComponent(maPerfil); // Redireciona para o perfil
+        });
+    });
+</script>
+
 </body>
 </html>
