@@ -407,7 +407,6 @@ $disciplinas = obter_disciplinas($ma_user, $cod_categoria, $pdo);
 																Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id ea earum.
 																<div class="task-assign">Assigned to Ferdinand M. <div class="due-date">due date <span>22 February 2018</span></div></div>
 															</li>
-											
 														</ul>
 													</div>
 													<!-- Close Task start -->
