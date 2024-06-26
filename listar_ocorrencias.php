@@ -25,8 +25,8 @@ $caminho_imagem = obter_caminho_imagem($ma_user, $cod_categoria, $pdo);
 $alunos = listar_alunos($pdo);
 $professores = listar_professores($pdo);
 $coordenadores = listar_coordenadores($pdo);
-$ocorrencias_alunos = listar_ocorrencias('1', $pdo);
-$ocorrencias_professores = listar_ocorrencias('2', $pdo);
+$ocorrencias_alunos = listar_ocorrencias(NULL, '2', '1', $pdo);
+$ocorrencias_professores = listar_ocorrencias(NULL,'2', '2', $pdo);
 ?>
 
 <!DOCTYPE html>

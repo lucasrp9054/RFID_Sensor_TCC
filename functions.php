@@ -884,7 +884,7 @@ function contar_dados_index($ma, $tipo, $op, $pdo){
                 return $result['dias_diff'];
 
             case 4: // Qtd de ocorrências para o professor
-                $stmt = $pdo->prepare("SELECT COUNT(id_ocorrencia) AS qtd_ocorrencias FROM tb_ocorrencias_profissionais WHERE ma_prof = :ma");
+                $stmt = $pdo->prepare("SELECT COUNT(id_ocorrencia) AS qtd_ocorrencias FROM tb_ocorrencias_profissionais WHERE ma_profissional = :ma");
                 $stmt->bindParam(':ma', $ma);
                 $stmt->execute();
                 $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -1042,66 +1042,173 @@ function listar_registros($tipo ,$pdo){
 }
 
 
-function listar_ocorrencias($tipo ,$pdo){
-    
-    if($tipo == 1)
-    {
-        $stmt = $pdo->query("SELECT oa.ma_aluno,
+function listar_ocorrencias($ma, $operacao, $tipo, $pdo) {
+    // Verifica o tipo de ocorrência para decidir qual consulta executar
+    if ($tipo == 1) {
+        if ($operacao == 1) { // Aluno único
+            // Consulta para listar ocorrências específicas de um aluno
+            $stmt = $pdo->prepare("SELECT 
+                                    oa.data_hora_ocorrencia,
+                                    tpo.ocorrencia,
+                                    oa.id_grade_horaria,
+                                    d.nome AS disciplina
+                                FROM 
+                                    tb_ocorrencias_alunos oa
+                                JOIN 
+                                    tb_tipo_ocorrencia tpo ON tpo.id_tipo_ocorrencia = oa.id_tipo_ocorrencia
+                                JOIN 
+                                    tb_grade_horaria gd ON gd.id_grade_horaria = oa.id_grade_horaria
+                                JOIN 
+                                    tb_disciplinas d ON d.id_disciplina = gd.id_disciplina
+                                WHERE 
+                                    oa.ma_aluno = :ma");
+            $stmt->bindParam(':ma', $ma);
+            $stmt->execute();
+
+            // Recupera todas as ocorrências em um array associativo
+            $ocorrencias_aluno = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Verifica se foram retornados resultados
+            if (empty($ocorrencias_aluno)) {
+                echo "Nenhuma ocorrência encontrada para o aluno com MA: $ma.";
+            }
+
+            // Formata a data e hora das ocorrências
+            foreach ($ocorrencias_aluno as &$registro) {
+                $dataHoraOcorrencia = new DateTime($registro['data_hora_ocorrencia']);
+                $registro['data_ocorrencia'] = $dataHoraOcorrencia->format('d/m/Y');
+                $registro['hora_ocorrencia'] = $dataHoraOcorrencia->format('H:i');
+            }
+
+            // Retorna as ocorrências formatadas
+            return $ocorrencias_aluno;
+        } else { // Grupo de alunos
+            // Consulta para listar ocorrências de alunos
+            $stmt = $pdo->query("SELECT 
+                                    oa.ma_aluno,
                                     a.nome AS nome_aluno,
                                     cds.dia_semana,
                                     oa.data_hora_ocorrencia,
                                     tpo.ocorrencia,
                                     oa.id_grade_horaria,
                                     d.nome AS disciplina
+                                FROM 
+                                    tb_ocorrencias_alunos oa
+                                JOIN 
+                                    tb_alunos a ON a.ma_aluno = oa.ma_aluno
+                                JOIN 
+                                    tb_tipo_ocorrencia tpo ON tpo.id_tipo_ocorrencia = oa.id_tipo_ocorrencia
+                                JOIN 
+                                    tb_grade_horaria gd ON gd.id_grade_horaria = oa.id_grade_horaria
+                                JOIN 
+                                    tb_disciplinas d ON d.id_disciplina = gd.id_disciplina
+                                JOIN 
+                                    tb_cod_dia_semana cds ON cds.cod_dia_semana = DAYOFWEEK(oa.data_hora_ocorrencia)");
 
-                            FROM tb_ocorrencias_alunos oa
-                            JOIN tb_alunos a ON a.ma_aluno = oa.ma_aluno
-                            JOIN tb_tipo_ocorrencia tpo ON tpo.id_tipo_ocorrencia = oa.id_tipo_ocorrencia
-                            JOIN tb_grade_horaria gd ON gd.id_grade_horaria = oa.id_grade_horaria
-                            JOIN tb_disciplinas d ON d.id_disciplina = gd.id_disciplina
-                            JOIN tb_cod_dia_semana cds ON cds.cod_dia_semana = DAYOFWEEK(oa.data_hora_ocorrencia);
-                            ");
+            // Recupera todas as ocorrências em um array associativo
+            $ocorrencias_alunos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $ocorrencias_alunos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            // Verifica se foram retornados resultados
+            if (empty($ocorrencias_alunos)) {
+                echo "Nenhuma ocorrência encontrada para o grupo de alunos.";
+            }
 
-        foreach ($ocorrencias_alunos as &$registro) {
-            $dataHoraOcorrencia = new DateTime($registro['data_hora_ocorrencia']);
-            $registro['data_ocorrencia'] = $dataHoraOcorrencia->format('d/m/Y');
-            $registro['hora_ocorrencia'] = $dataHoraOcorrencia->format('H:i:s');
+            // Formata a data e hora das ocorrências
+            foreach ($ocorrencias_alunos as &$registro) {
+                $dataHoraOcorrencia = new DateTime($registro['data_hora_ocorrencia']);
+                $registro['data_ocorrencia'] = $dataHoraOcorrencia->format('d/m/Y');
+                $registro['hora_ocorrencia'] = $dataHoraOcorrencia->format('H:i:s');
+            }
+
+            // Retorna as ocorrências formatadas
+            return $ocorrencias_alunos;
         }
+    } else {
+        if ($operacao == 1) { // Profissional único
+            // Consulta para listar ocorrências específicas de um profissional
+            $stmt = $pdo->prepare("SELECT 
+                                    cds.dia_semana,
+                                    op.data_hora_ocorrencia,
+                                    tpo.ocorrencia,
+                                    op.id_grade_horaria,
+                                    d.nome AS disciplina
+                                FROM 
+                                    tb_ocorrencias_profissionais op
+                                JOIN 
+                                    tb_tipo_ocorrencia tpo ON tpo.id_tipo_ocorrencia = op.id_tipo_ocorrencia
+                                JOIN 
+                                    tb_grade_horaria gd ON gd.id_grade_horaria = op.id_grade_horaria
+                                JOIN 
+                                    tb_disciplinas d ON d.id_disciplina = gd.id_disciplina
+                                JOIN 
+                                    tb_cod_dia_semana cds ON cds.cod_dia_semana = DAYOFWEEK(op.data_hora_ocorrencia)
+                                WHERE 
+                                    op.ma_profissional = :ma");
+            $stmt->bindParam(':ma', $ma);
+            $stmt->execute();
 
-        return $ocorrencias_alunos;
-    }
-    else
-    {
-        $stmt = $pdo->query("SELECT op.ma_profissional,
+            // Recupera todas as ocorrências em um array associativo
+            $ocorrencias_profissional = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Verifica se foram retornados resultados
+            if (empty($ocorrencias_profissional)) {
+                echo "Nenhuma ocorrência encontrada para o profissional com MA: $ma.";
+            }
+
+            // Formata a data e hora das ocorrências
+            foreach ($ocorrencias_profissional as &$registro) {
+                $dataHoraOcorrencia = new DateTime($registro['data_hora_ocorrencia']);
+                $registro['data_ocorrencia'] = $dataHoraOcorrencia->format('d/m/Y');
+                $registro['hora_ocorrencia'] = $dataHoraOcorrencia->format('H:i:s');
+            }
+
+            // Retorna as ocorrências formatadas
+            return $ocorrencias_profissional;
+        } else { // Grupo de profissionais
+            // Consulta para listar ocorrências de profissionais
+            $stmt = $pdo->query("SELECT 
+                                    op.ma_profissional,
                                     p.nome AS nome_profissional,
                                     cds.dia_semana,
                                     op.data_hora_ocorrencia,
                                     tpo.ocorrencia,
                                     op.id_grade_horaria,
                                     d.nome AS disciplina
+                                FROM 
+                                    tb_ocorrencias_profissionais op
+                                JOIN 
+                                    tb_profissionais p ON p.ma = op.ma_profissional
+                                JOIN 
+                                    tb_tipo_ocorrencia tpo ON tpo.id_tipo_ocorrencia = op.id_tipo_ocorrencia
+                                JOIN 
+                                    tb_grade_horaria gd ON gd.id_grade_horaria = op.id_grade_horaria
+                                JOIN 
+                                    tb_disciplinas d ON d.id_disciplina = gd.id_disciplina
+                                JOIN 
+                                    tb_cod_dia_semana cds ON cds.cod_dia_semana = DAYOFWEEK(op.data_hora_ocorrencia)");
 
-                            FROM tb_ocorrencias_profissionais op
-                            JOIN tb_profissionais p ON p.ma = op.ma_profissional
-                            JOIN tb_tipo_ocorrencia tpo ON tpo.id_tipo_ocorrencia = op.id_tipo_ocorrencia
-                            JOIN tb_grade_horaria gd ON gd.id_grade_horaria = op.id_grade_horaria
-                            JOIN tb_disciplinas d ON d.id_disciplina = gd.id_disciplina
-                            JOIN tb_cod_dia_semana cds ON cds.cod_dia_semana = DAYOFWEEK(op.data_hora_ocorrencia);
-                            ");
+            // Recupera todas as ocorrências em um array associativo
+            $ocorrencias_profissionais = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $ocorrencias_profissionais = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            // Verifica se foram retornados resultados
+            if (empty($ocorrencias_profissionais)) {
+                echo "Nenhuma ocorrência encontrada para o grupo de profissionais.";
+            }
 
-        foreach ($ocorrencias_profissionais as &$registro) {
-            $dataHoraOcorrencia = new DateTime($registro['data_hora_ocorrencia']);
-            $registro['data_ocorrencia'] = $dataHoraOcorrencia->format('d/m/Y');
-            $registro['hora_ocorrencia'] = $dataHoraOcorrencia->format('H:i:s');
+            // Formata a data e hora das ocorrências
+            foreach ($ocorrencias_profissionais as &$registro) {
+                $dataHoraOcorrencia = new DateTime($registro['data_hora_ocorrencia']);
+                $registro['data_ocorrencia'] = $dataHoraOcorrencia->format('d/m/Y');
+                $registro['hora_ocorrencia'] = $dataHoraOcorrencia->format('H:i:s');
+            }
+
+            // Retorna as ocorrências formatadas
+            return $ocorrencias_profissionais;
         }
-
-        return $ocorrencias_profissionais;
-
     }
 }
+
+
 
 
 function obter_grade_horaria($ma, $categoria, $pdo) {

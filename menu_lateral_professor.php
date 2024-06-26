@@ -23,12 +23,8 @@
 						<span class="micon"><i class="fas fa-users"></i></span><span class="mtext">Turmas</span>						</a>
 					</li>
 					<li>
-						<a href="#" class="dropdown-toggle no-arrow">
-						<span class="micon"><i class="fa-solid fa-user-tie"></i></i></span><span class="mtext">Professores</span>						</a>
-					</li>
-					<li>
 						<a href="listar_usuarios.php" class="dropdown-toggle no-arrow">
-							<span class="micon fa fa-list"></span><span class="mtext"> Listas</span>
+							<span class="micon fa fa-list"></span><span class="mtext"> Usuários</span>
 						</a>
 					</li>
 

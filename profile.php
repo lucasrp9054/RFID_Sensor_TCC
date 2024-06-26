@@ -40,6 +40,9 @@ $caminho_imagem = obter_caminho_imagem($ma_user, $cod_categoria,$pdo);
 
 $disciplinas = obter_disciplinas($ma_user, $cod_categoria, $pdo);
 
+$ocorrencias_usuario = listar_ocorrencias($ma_user,'1', $cod_categoria, $pdo);
+
+
 ?>
 
 
@@ -58,6 +61,9 @@ $disciplinas = obter_disciplinas($ma_user, $cod_categoria, $pdo);
 
 	<!-- Mobile Specific Metas -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 
 	<!-- Google Font -->
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -283,30 +289,25 @@ $disciplinas = obter_disciplinas($ma_user, $cod_categoria, $pdo);
 												<div class="clearfix">
 												</div>
 												<div class="table-responsive">
-													<table id="professoresTable" class="table hover">
+													<table id="ocorrenciaUsuarioTable" class="table hover">
 													<thead>
 															<tr>
-																<th>ID Grade Horária</th>
+																<th>ID Grade</th>
 																<th>Disciplina</th>
-																<th>Dia Útil</th>
 																<th>Data</th>
 																<th>Horário</th>
 																<th>Ocorrência</th>
-																
-																
-																
 															</tr>
 														</thead>
 														<tbody>
-															<?php foreach ($ocorrencias_professores as $ocorrencias_professor): ?>
+															<?php foreach ($ocorrencias_usuario as $ocorrencia): ?>
 																<tr class="linha-dados linha-professor">
 																	
-																	<td><?php echo htmlspecialchars($ocorrencias_professor['dia_semana']); ?></td>
-																	<td><?php echo htmlspecialchars($ocorrencias_professor['data_ocorrencia']); ?></td>
-																	<td><?php echo htmlspecialchars($ocorrencias_professor['hora_ocorrencia']); ?></td>
-																	<td><?php echo htmlspecialchars($ocorrencias_professor['ocorrencia']); ?></td>
-																	<td><?php echo htmlspecialchars($ocorrencias_professor['disciplina']); ?></td>
-																	<td><?php echo htmlspecialchars($ocorrencias_professor['id_grade_horaria']); ?></td>
+																	<td><?php echo htmlspecialchars($ocorrencia['id_grade_horaria']); ?></td>
+																	<td><?php echo htmlspecialchars($ocorrencia['disciplina']); ?></td>
+																	<td><?php echo htmlspecialchars($ocorrencia['data_ocorrencia']); ?></td>
+																	<td><?php echo htmlspecialchars($ocorrencia['hora_ocorrencia']); ?></td>
+																	<td><?php echo htmlspecialchars($ocorrencia['ocorrencia']); ?></td>
 														
 																</tr>
 															<?php endforeach; ?>
@@ -370,6 +371,9 @@ $disciplinas = obter_disciplinas($ma_user, $cod_categoria, $pdo);
 					</div>
 				</div>
 			</div>
+			<div class="footer-wrap pd-20 mb-20 card-box">
+                    Engenharia da Computação - Lucas Ribeiro e Líbano Abboud
+                </div>
 		</div>
 	</div>
 	 <!-- JavaScripts -->
@@ -391,125 +395,40 @@ $disciplinas = obter_disciplinas($ma_user, $cod_categoria, $pdo);
     <script src="src/plugins/datatables/js/vfs_fonts.js"></script>
     <!-- Configurações do DataTables -->
 
-    <script src="vendors/scripts/datatable-setting.js"></script>
-    document.getElementById('telefone').addEventListener('input', function (e) {
-      var x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
-      e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
-    });
-  </script>
+	<script src="vendors/scripts/datatable-setting.js"></script>
+	<script>
+	document.getElementById('telefone').addEventListener('input', function (e) {
+		var x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+		e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+	});
+	</script>
+
 
 
 
   <script>
+    // Função executada quando o documento HTML estiver completamente carregado
     $(document).ready(function() {
-        // Opções padrão para DataTables
-        var defaultTableOptions = {
-            "order": [], // Ordenação inicial em nenhuma coluna
-            "language": {
-                "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json" // Tradução para PT-BR
-            }
-        };
+			// Define opções padrão para DataTables
+			var defaultTableOptions = {
+				"order": [], // Nenhuma coluna é ordenada inicialmente
+				"language": {
+					"url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json" // Tradução para PT-BR
+				}
+			};
 
-        var alunosTableOptions = {
-            ...defaultTableOptions,
-            dom: 'Bfrtip',
-            buttons: [
-                {
-                    extend: 'copy',
-                    text: 'Copiar',
-                    title: function() {
-                        return 'Lista de Alunos'; // Título personalizado para a tabela de Alunos
-                    }
-                },
-                {
-                    extend: 'csv',
-                    text: 'CSV',
-                    title: function() {
-                        return 'Lista de Alunos'; // Título personalizado para a tabela de Alunos
-                    }
-                },
-                {
-                    extend: 'excel',
-                    text: 'Excel',
-                    title: function() {
-                        return 'Lista de Alunos'; // Título personalizado para a tabela de Alunos
-                    }
-                },
-                {
-                    extend: 'pdf',
-                    text: 'PDF',
-                    title: function() {
-                        return 'Lista de Alunos'; // Título personalizado para a tabela de Alunos
-                    }
-                },
-                {
-                    extend: 'print',
-                    text: 'Imprimir',
-                    title: function() {
-                        return 'Lista de Alunos'; // Título personalizado para a tabela de Alunos
-                    }
-                }
-            ]
-        };
+			// Inicializa o DataTables para a tabela com ID 'alunosTable' se ainda não estiver inicializada
+			if (!$.fn.dataTable.isDataTable('#ocorrenciaUsuarioTable')) {
+				$('#ocorrenciaUsuarioTable').DataTable(defaultTableOptions);
+			}
 
-        var professoresTableOptions = {
-            ...defaultTableOptions,
-            dom: 'Bfrtip',
-            buttons: [
-                {
-                    extend: 'copy',
-                    text: 'Copiar',
-                    title: function() {
-                        return 'Histórico de Ocorrências dos Professores'; // Título personalizado para a tabela de Professores
-                    }
-                },
-                {
-                    extend: 'csv',
-                    text: 'CSV',
-                    title: function() {
-                        return 'Histórico de Ocorrências dos Professores'; // Título personalizado para a tabela de Professores
-                    }
-                },
-                {
-                    extend: 'excel',
-                    text: 'Excel',
-                    title: function() {
-                        return 'Histórico de Ocorrências dos Professores'; // Título personalizado para a tabela de Professores
-                    }
-                },
-                {
-                    extend: 'pdf',
-                    text: 'PDF',
-                    title: function() {
-                        return 'Histórico de Ocorrências dos Professores'; // Título personalizado para a tabela de Professores
-                    }
-                },
-                {
-                    extend: 'print',
-                    text: 'Imprimir',
-                    title: function() {
-                        return 'Histórico de Ocorrências dos Professores'; // Título personalizado para a tabela de Professores
-                    }
-                }
-            ]
-        };
+			// Inicializa o DataTables para a tabela com ID 'professoresTable' se ainda não estiver inicializada
+			if (!$.fn.dataTable.isDataTable('#professoresTable')) {
+				$('#professoresTable').DataTable(defaultTableOptions);
+			}
+		});
+	</script>
 
-        // Inicializa os DataTables para cada tabela com as respectivas opções
-        if (!$.fn.dataTable.isDataTable('#alunosTable')) {
-            $('#alunosTable').DataTable(alunosTableOptions);
-        }
-
-        if (!$.fn.dataTable.isDataTable('#professoresTable')) {
-            $('#professoresTable').DataTable(professoresTableOptions);
-        }
-
-        // Captura o clique na linha das tabelas de alunos e professores
-        $('#alunosTable, #professoresTable').on('click', 'tr.linha-dados', function() {
-            var maPerfil = $(this).data('ma'); // Obtém o MA do perfil da linha clicada
-            window.location.href = 'visitar_perfil.php?ma_perfil=' + encodeURIComponent(maPerfil); // Redireciona para o perfil
-        });
-    });
-</script>
 
 </body>
 </html>
