@@ -213,7 +213,7 @@ $ocorrencias_professores = listar_ocorrencias(NULL,'2', '2', $pdo);
                             </thead>
                             <tbody>
                                 <?php foreach ($ocorrencias_alunos as $ocorrencias_aluno): ?>
-                                    <tr class="linha-dados linha-professor" data-ma="<?php echo htmlspecialchars($ocorrencias_professor['ma_aluno']); ?>">
+                                    <tr class="linha-dados linha-professor" data-ma="<?php echo htmlspecialchars($ocorrencias_aluno['ma_aluno']); ?>">
                                         <td><?php echo htmlspecialchars($ocorrencias_aluno['ma_aluno']); ?></td>
                                         <td><?php echo htmlspecialchars($ocorrencias_aluno['nome_aluno']); ?></td>
                                         <td><?php echo htmlspecialchars($ocorrencias_aluno['dia_semana']); ?></td>
