@@ -210,8 +210,6 @@ function gerar_novo_ma($pdo) {
 // Função para lidar com registros de profissionais na tabela de presença
 function entrada_saida_profissionais($ma, $pdo) {
     echo "Processando registro de profissional para MA: $ma\n";
-
-    $data_hora = date('Y-m-d H:i:s');
     
     // Verifica se já existe um registro para o MA na tabela de registros de profissionais
     $stmt_registro = $pdo->prepare("SELECT * FROM tb_registro_presenca_profissionais WHERE ma = ? ORDER BY data_hora_entrada DESC LIMIT 1");
@@ -220,26 +218,24 @@ function entrada_saida_profissionais($ma, $pdo) {
 
     if ($registro && !$registro['data_hora_saida']) {
         // Atualiza o horário de saída para o registro existente
-        $sql_update = "UPDATE tb_registro_presenca_profissionais SET data_hora_saida = ? WHERE ma = ? AND id_registro_profissional = ?";
+        $sql_update = "UPDATE tb_registro_presenca_profissionais SET data_hora_saida = NOW() WHERE ma = ? AND id_registro_profissional = ?";
         $stmt_update = $pdo->prepare($sql_update);
-        $stmt_update->execute([$data_hora, $ma, $registro['id_registro_profissional']]);
-        echo "Horário de saída de profissional atualizado para data_hora_saida: " . $data_hora . "\n";
+        $stmt_update->execute([$ma, $registro['id_registro_profissional']]);
+        echo "Horário de saída de profissional atualizado para data_hora_saida: " . date('Y-m-d H:i:s') . "\n";
     } else {
         // Cria um novo registro de entrada
-        $sql_insert = "INSERT INTO tb_registro_presenca_profissionais (ma, data_hora_entrada) VALUES (?, ?)";
+        $sql_insert = "INSERT INTO tb_registro_presenca_profissionais (ma, data_hora_entrada) VALUES (?, NOW())";
         $stmt_insert = $pdo->prepare($sql_insert);
-        $stmt_insert->execute([$ma, $data_hora]);
-        echo "Nova entrada de profissional registrada data_hora_entrada: " . $data_hora . "\n";
+        $stmt_insert->execute([$ma]);
+        echo "Nova entrada de profissional registrada data_hora_entrada: " . date('Y-m-d H:i:s') . "\n";
     }
 }
-
 
 
 
 // Função para lidar com registros de alunos na tabela de presença
 function entrada_saida_alunos($ma_aluno, $pdo) {
     echo "Processando registro de aluno para MA: $ma_aluno\n";
-    $data_hora = date('Y-m-d H:i:s');
     
     // Verifica se já existe um registro para o MA na tabela de registros de alunos
     $stmt_registro = $pdo->prepare("SELECT * FROM tb_registro_presenca_alunos WHERE ma_aluno = ? ORDER BY data_hora_entrada DESC LIMIT 1");
@@ -248,19 +244,18 @@ function entrada_saida_alunos($ma_aluno, $pdo) {
 
     if ($registro && !$registro['data_hora_saida']) {
         // Atualiza o horário de saída para o registro existente
-        $sql_update = "UPDATE tb_registro_presenca_alunos SET data_hora_saida = ? WHERE ma_aluno = ? AND id_registro_aluno = ?";
+        $sql_update = "UPDATE tb_registro_presenca_alunos SET data_hora_saida = NOW() WHERE ma_aluno = ? AND id_registro_aluno = ?";
         $stmt_update = $pdo->prepare($sql_update);
-        $stmt_update->execute([$data_hora, $ma_aluno, $registro['id_registro_aluno']]);
-        echo "Horário de saída de aluno atualizado para data_hora_saida: " . $data_hora . "\n";
+        $stmt_update->execute([$ma_aluno, $registro['id_registro_aluno']]);
+        echo "Horário de saída de aluno atualizado para data_hora_saida: " . date('Y-m-d H:i:s') . "\n";
     } else {
         // Cria um novo registro de entrada
-        $sql_insert = "INSERT INTO tb_registro_presenca_alunos (ma_aluno, data_hora_entrada) VALUES (?, ?)";
+        $sql_insert = "INSERT INTO tb_registro_presenca_alunos (ma_aluno, data_hora_entrada) VALUES (?, NOW())";
         $stmt_insert = $pdo->prepare($sql_insert);
-        $stmt_insert->execute([$ma_aluno, $data_hora]);
-        echo "Nova entrada de aluno registrada data_hora_entrada: " . $data_hora . "\n";
+        $stmt_insert->execute([$ma_aluno]);
+        echo "Nova entrada de aluno registrada data_hora_entrada: " . date('Y-m-d H:i:s') . "\n";
     }
 }
-
 
 
 
